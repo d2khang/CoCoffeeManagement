@@ -1,0 +1,26 @@
+/* Màu nền trắng kem nhã nhặn */
+.root {
+    -fx-background-color: #F8F9FA;
+}
+
+/* Chữ CỎ Coffee & Tea màu xanh lá */
+.title-text {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2E7D32;
+}
+
+/* Nút bấm màu nâu cà phê */
+.btn-primary {
+    -fx-background-color: #5D4037;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #4E342E;
+}
