@@ -13,7 +13,10 @@ public class DatabaseConfig {
     }
 
     public static void initializeDatabase() {
-        // 1. Các bảng cũ (Nhân viên, Danh mục, Sản phẩm)
+        // ==========================================
+        // 1. KHAI BÁO CÁC CÂU LỆNH TẠO BẢNG
+        // ==========================================
+
         String createEmployeeTable = """
             CREATE TABLE IF NOT EXISTS Employee (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,36 +50,40 @@ public class DatabaseConfig {
             );
         """;
 
-        // ======================= PHẦN MỚI THÊM VÀO =======================
-        // 2. Bảng Hóa đơn tổng
-        String createOrderTable = """
-            CREATE TABLE IF NOT EXISTS Orders (
+        // Version 0.5: Bảng Invoice - Không còn table_id
+        String createInvoiceTable = """
+            CREATE TABLE IF NOT EXISTS Invoice (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                employee_username TEXT NOT NULL,
-                total_amount REAL NOT NULL DEFAULT 0,
-                status TEXT NOT NULL DEFAULT 'PAID' CHECK(status IN ('PAID','CANCELLED')),
-                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+                invoice_code TEXT NOT NULL UNIQUE,
+                employee_id INTEGER NOT NULL,
+                subtotal REAL NOT NULL DEFAULT 0,
+                discount REAL NOT NULL DEFAULT 0,
+                total REAL NOT NULL DEFAULT 0,
+                payment_method TEXT CHECK(payment_method IN ('CASH', 'BANK_TRANSFER', 'CARD')),
+                status TEXT NOT NULL DEFAULT 'OPEN' CHECK(status IN ('OPEN', 'PAID', 'CANCELLED')),
+                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                paid_at TEXT,
+                FOREIGN KEY (employee_id) REFERENCES Employee(id)
             );
         """;
 
-        // 3. Bảng Chi tiết hóa đơn (Các món trong 1 hóa đơn)
+        // Version 0.5: Chi tiết Hóa đơn
         String createOrderDetailTable = """
             CREATE TABLE IF NOT EXISTS OrderDetail (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                order_id INTEGER NOT NULL,
+                invoice_id INTEGER NOT NULL,
                 product_id INTEGER NOT NULL,
                 product_name TEXT NOT NULL,
                 quantity INTEGER NOT NULL CHECK(quantity > 0),
                 price REAL NOT NULL,
-                FOREIGN KEY (order_id) REFERENCES Orders(id),
+                FOREIGN KEY (invoice_id) REFERENCES Invoice(id),
                 FOREIGN KEY (product_id) REFERENCES Product(id)
             );
         """;
-        // =================================================================
 
         String insertDefaultAdmin = """
             INSERT OR IGNORE INTO Employee (id, username, password_hash, full_name, role)
-            VALUES (1, 'admin', '$2a$12$LQv3c1yqSN.R6E4.D3gC.OuJvM.hQ2y7M3U1x6X8Z4D2gC.O4z/q', 'Chủ Quán CỎ', 'ADMIN');
+            VALUES (1, 'admin', '$2a$10$c8dqA.PvGrTbGaYSK30KoeR2QLyygQfIGukapYO2h5c627EFhAMm2', 'Chủ Quán CỎ', 'ADMIN');
         """;
 
         String insertDefaultCategories = """
@@ -86,19 +93,20 @@ public class DatabaseConfig {
             (3, 'Đá Xay', 'Thức uống đá xay giải nhiệt');
         """;
 
+        // ==========================================
+        // 2. MỞ KẾT NỐI VÀ THỰC THI SQL
+        // ==========================================
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute("PRAGMA foreign_keys = ON;"); // Bật kiểm tra khóa ngoại
 
-            // Chạy lệnh tạo bảng
             stmt.execute(createEmployeeTable);
             stmt.execute(createCategoryTable);
             stmt.execute(createProductTable);
-            stmt.execute(createOrderTable);         // Tạo bảng Orders
-            stmt.execute(createOrderDetailTable);   // Tạo bảng OrderDetail
+            stmt.execute(createInvoiceTable);
+            stmt.execute(createOrderDetailTable);
 
-            // Chèn dữ liệu mẫu
             stmt.execute(insertDefaultAdmin);
             stmt.execute(insertDefaultCategories);
 

@@ -2,7 +2,7 @@ package cocoffee.models;
 
 public class OrderDetail {
     private int id;
-    private int orderId;        // Thuộc hóa đơn nào?
+    private int invoiceId;      // Đã đổi từ orderId sang invoiceId
     private int productId;      // Món gì?
     private String productName; // Tên món (Lưu lại đề phòng sau này đổi tên)
     private int quantity;       // Số lượng ly
@@ -12,10 +12,10 @@ public class OrderDetail {
     public OrderDetail() {
     }
 
-    // Constructor đầy đủ
-    public OrderDetail(int id, int orderId, int productId, String productName, int quantity, double price) {
+    // Constructor đầy đủ (Đã cập nhật invoiceId)
+    public OrderDetail(int id, int invoiceId, int productId, String productName, int quantity, double price) {
         this.id = id;
-        this.orderId = orderId;
+        this.invoiceId = invoiceId;
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
@@ -32,8 +32,9 @@ public class OrderDetail {
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public int getOrderId() { return orderId; }
-    public void setOrderId(int orderId) { this.orderId = orderId; }
+    // Đã cập nhật Getter cho invoiceId
+    public int getInvoiceId() { return invoiceId; }
+    public void setInvoiceId(int invoiceId) { this.invoiceId = invoiceId; }
 
     public int getProductId() { return productId; }
     public void setProductId(int productId) { this.productId = productId; }
