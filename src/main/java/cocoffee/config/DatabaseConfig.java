@@ -13,7 +13,7 @@ public class DatabaseConfig {
     }
 
     public static void initializeDatabase() {
-        // 1. Lệnh tạo bảng Nhân viên (Đã có)
+        // 1. Các bảng cũ (Nhân viên, Danh mục, Sản phẩm)
         String createEmployeeTable = """
             CREATE TABLE IF NOT EXISTS Employee (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,7 +27,6 @@ public class DatabaseConfig {
             );
         """;
 
-        // 2. Lệnh tạo bảng Danh mục (Mới)
         String createCategoryTable = """
             CREATE TABLE IF NOT EXISTS Category (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,7 +35,6 @@ public class DatabaseConfig {
             );
         """;
 
-        // 3. Lệnh tạo bảng Sản phẩm (Mới)
         String createProductTable = """
             CREATE TABLE IF NOT EXISTS Product (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -49,12 +47,38 @@ public class DatabaseConfig {
             );
         """;
 
+        // ======================= PHẦN MỚI THÊM VÀO =======================
+        // 2. Bảng Hóa đơn tổng
+        String createOrderTable = """
+            CREATE TABLE IF NOT EXISTS Orders (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                employee_username TEXT NOT NULL,
+                total_amount REAL NOT NULL DEFAULT 0,
+                status TEXT NOT NULL DEFAULT 'PAID' CHECK(status IN ('PAID','CANCELLED')),
+                created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+        """;
+
+        // 3. Bảng Chi tiết hóa đơn (Các món trong 1 hóa đơn)
+        String createOrderDetailTable = """
+            CREATE TABLE IF NOT EXISTS OrderDetail (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                order_id INTEGER NOT NULL,
+                product_id INTEGER NOT NULL,
+                product_name TEXT NOT NULL,
+                quantity INTEGER NOT NULL CHECK(quantity > 0),
+                price REAL NOT NULL,
+                FOREIGN KEY (order_id) REFERENCES Orders(id),
+                FOREIGN KEY (product_id) REFERENCES Product(id)
+            );
+        """;
+        // =================================================================
+
         String insertDefaultAdmin = """
             INSERT OR IGNORE INTO Employee (id, username, password_hash, full_name, role)
             VALUES (1, 'admin', '$2a$12$LQv3c1yqSN.R6E4.D3gC.OuJvM.hQ2y7M3U1x6X8Z4D2gC.O4z/q', 'Chủ Quán CỎ', 'ADMIN');
         """;
 
-        // Chèn sẵn 3 danh mục mặc định để test
         String insertDefaultCategories = """
             INSERT OR IGNORE INTO Category (id, name, description) VALUES
             (1, 'Cà Phê', 'Các loại cà phê pha phin, pha máy'),
@@ -65,13 +89,14 @@ public class DatabaseConfig {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
-            // Bật tính năng kiểm tra khóa ngoại (Foreign Key) của SQLite
-            stmt.execute("PRAGMA foreign_keys = ON;");
+            stmt.execute("PRAGMA foreign_keys = ON;"); // Bật kiểm tra khóa ngoại
 
-            // Thực thi tạo các bảng
+            // Chạy lệnh tạo bảng
             stmt.execute(createEmployeeTable);
             stmt.execute(createCategoryTable);
             stmt.execute(createProductTable);
+            stmt.execute(createOrderTable);         // Tạo bảng Orders
+            stmt.execute(createOrderDetailTable);   // Tạo bảng OrderDetail
 
             // Chèn dữ liệu mẫu
             stmt.execute(insertDefaultAdmin);

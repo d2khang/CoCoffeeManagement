@@ -10,12 +10,10 @@
     <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
 
     <top>
-        <VBox alignment="CENTER" spacing="4" styleClass="login-card">
-            <padding><Insets top="20" bottom="20"/></padding>
-            <Label text="QUẢN LÝ THỰC ĐƠN" styleClass="title-text"/>
-            <Label text="Thêm, chỉnh sửa và quản lý danh sách đồ uống" styleClass="subtitle-text"/>
-            <BorderPane.margin><Insets bottom="15"/></BorderPane.margin>
-        </VBox>
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 0 0 20 0;">
+            <Button text="⬅ Quay lại" onAction="#handleBackToMain" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Label text="QUẢN LÝ THỰC ĐƠN" styleClass="title-text" />
+        </HBox>
     </top>
 
     <left>

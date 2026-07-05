@@ -194,4 +194,23 @@ public class MenuController {
         if ("HIDDEN".equals(dbStatus)) return "Ẩn";
         return "Đang bán"; // Mặc định là AVAILABLE
     }
+    // ---> HÀM QUAY LẠI MÀN HÌNH CHÍNH <---
+    @FXML
+    protected void handleBackToMain() {
+        try {
+            javafx.fxml.FXMLLoader fxmlLoader = new javafx.fxml.FXMLLoader(getClass().getResource("/views/main-view.fxml"));
+            javafx.scene.Scene mainScene = new javafx.scene.Scene(fxmlLoader.load(), 800, 600);
+
+            // Lấy khung cửa sổ hiện tại (dùng messageLabel làm mỏ neo để tìm)
+            javafx.stage.Stage currentStage = (javafx.stage.Stage) messageLabel.getScene().getWindow();
+
+            currentStage.setScene(mainScene);
+            currentStage.setTitle("CỎ Coffee & Tea - Trang Chủ");
+            currentStage.centerOnScreen();
+        } catch (Exception e) {
+            e.printStackTrace();
+            messageLabel.setText("Lỗi: Không thể quay lại màn hình chính!");
+            messageLabel.setStyle("-fx-text-fill: red;");
+        }
+    }
 }

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<HBox spacing="20" xmlns:fx="http://javafx.com/fxml" fx:controller="cocoffee.controllers.PosController" stylesheets="@../styles/style.css">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <VBox spacing="10" HBox.hgrow="ALWAYS" prefWidth="500">
+
+        <HBox spacing="20" alignment="CENTER_LEFT">
+            <Button text="⬅ Quay lại" onAction="#handleBackToMain" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Label text="THỰC ĐƠN TẠI QUÁN" styleClass="title-text"/>
+        </HBox>
+
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <Label text="Lọc danh mục:" style="-fx-font-weight: bold;"/>
+            <ComboBox fx:id="categoryComboBox" promptText="Tất cả đồ uống" prefWidth="250"/>
+        </HBox>
+
+        <TableView fx:id="productTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn text="Tên Đồ Uống" prefWidth="250">
+                    <cellValueFactory><PropertyValueFactory property="name"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="menuPriceColumn" text="Giá Tiền" prefWidth="150">
+                    <cellValueFactory><PropertyValueFactory property="price"/></cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Label text="Số lượng:"/>
+            <TextField fx:id="qtyField" text="1" prefWidth="50" alignment="CENTER"/>
+            <Button text="Thêm Vào Hóa Đơn ➔" styleClass="btn-primary" onAction="#handleAddToCart"/>
+        </HBox>
+    </VBox>
+
+    <VBox spacing="10" HBox.hgrow="ALWAYS" prefWidth="450" style="-fx-background-color: #f4f4f4; -fx-padding: 15; -fx-border-color: #ddd; -fx-border-radius: 5;">
+        <Label text="HÓA ĐƠN HIỆN TẠI" styleClass="title-text" style="-fx-font-size: 18px;"/>
+
+        <TableView fx:id="cartTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn text="Tên món" prefWidth="180">
+                    <cellValueFactory><PropertyValueFactory property="productName"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn text="SL" prefWidth="50">
+                    <cellValueFactory><PropertyValueFactory property="quantity"/></cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="cartTotalColumn" text="Thành Tiền" prefWidth="120"/>
+            </columns>
+        </TableView>
+
+        <HBox spacing="10">
+            <Button text="Xóa món đang chọn" style="-fx-background-color: #D32F2F; -fx-text-fill: white;" onAction="#handleRemoveFromCart"/>
+            <Button text="Xóa sạch toàn bộ" style="-fx-background-color: #757575; -fx-text-fill: white;" onAction="#handleClearCart"/>
+        </HBox>
+
+        <Separator/>
+
+        <HBox alignment="CENTER_RIGHT" spacing="15">
+            <Label text="TỔNG TIỀN:" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <Label fx:id="totalAmountLabel" text="0 Đ" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #D32F2F;"/>
+        </HBox>
+
+        <Button text="THANH TOÁN (IN HÓA ĐƠN)" styleClass="btn-primary" style="-fx-font-size: 18px; -fx-padding: 15; -fx-background-color: #2E7D32;" maxWidth="Infinity" onAction="#handleCheckout"/>
+
+        <Label fx:id="messageLabel" text="" wrapText="true" alignment="CENTER" maxWidth="Infinity"/>
+    </VBox>
+</HBox>

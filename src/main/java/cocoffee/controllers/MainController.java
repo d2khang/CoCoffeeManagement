@@ -26,9 +26,23 @@ public class MainController {
         }
     }
 
+    // ---> HÀM MỞ MÀN HÌNH BÁN HÀNG (POS) <---
     @FXML
-    protected void onStartButtonClick() {
-        statusLabel.setText("Đang chuẩn bị vào màn hình Đăng Nhập...");
+    protected void onPosClick() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/pos-view.fxml"));
+            // Màn hình POS cần cực kỳ to rộng để nhân viên dễ thao tác
+            Scene posScene = new Scene(fxmlLoader.load(), 1024, 700);
+
+            Stage currentStage = (Stage) statusLabel.getScene().getWindow();
+            currentStage.setScene(posScene);
+            currentStage.setTitle("CỎ Coffee & Tea - BÁN HÀNG POS");
+            currentStage.centerOnScreen();
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusLabel.setText("Lỗi: Không thể mở màn hình Bán Hàng!");
+            statusLabel.setStyle("-fx-text-fill: red;");
+        }
     }
 
     // ---> HÀM XỬ LÝ CHUYỂN SANG MÀN HÌNH MENU <---
