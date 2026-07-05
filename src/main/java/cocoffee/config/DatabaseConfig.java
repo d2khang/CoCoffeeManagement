@@ -37,6 +37,11 @@ public class DatabaseConfig {
             stmt.execute(createEmployeeTable);
             stmt.execute(insertDefaultAdmin);
 
+            // ---> 2 DÒNG CODE QUAN TRỌNG ĐỂ CẬP NHẬT LẠI MẬT KHẨU THÀNH 123456 <---
+            String correctHash = org.mindrot.jbcrypt.BCrypt.hashpw("123456", org.mindrot.jbcrypt.BCrypt.gensalt());
+            stmt.execute("UPDATE Employee SET password_hash = '" + correctHash + "' WHERE username = 'admin'");
+            // ----------------------------------------------------------------------
+
             System.out.println("Kiểm tra và khởi tạo cơ sở dữ liệu thành công!");
 
         } catch (SQLException e) {
