@@ -4,12 +4,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="15.0" xmlns:fx="http://javafx.com/fxml"
+<VBox alignment="CENTER" spacing="18.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="cocoffee.controllers.LoginController"
-      stylesheets="@../styles/style.css" prefWidth="300" prefHeight="250">
+      stylesheets="@../styles/style.css" prefWidth="340" prefHeight="280"
+      maxWidth="340" maxHeight="280" styleClass="login-card">
 
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets top="30" right="30" bottom="30" left="30"/>
     </padding>
 
     <Label text="ĐĂNG NHẬP" styleClass="title-text"/>
@@ -19,5 +20,5 @@
 
     <Button text="Đăng nhập" styleClass="btn-primary" onAction="#handleLogin" prefWidth="Infinity"/>
 
-    <Label fx:id="messageLabel" text="" style="-fx-text-fill: red;"/>
+    <Label fx:id="messageLabel" text="" style="-fx-text-fill: #D32F2F;"/>
 </VBox>

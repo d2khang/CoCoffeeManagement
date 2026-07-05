@@ -1,26 +1,180 @@
-/* Màu nền trắng kem nhã nhặn */
+/* ===== BIẾN MÀU CHỦ ĐẠO ===== */
 .root {
-    -fx-background-color: #F8F9FA;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-background-color: #F5F1EB; /* nền kem nhẹ, tông cà phê */
 }
 
-/* Chữ CỎ Coffee & Tea màu xanh lá */
+/* ===== TIÊU ĐỀ ===== */
 .title-text {
-    -fx-font-size: 28px;
+    -fx-font-size: 26px;
     -fx-font-weight: bold;
-    -fx-text-fill: #2E7D32;
+    -fx-text-fill: #2E7D32; /* xanh lá đậm */
 }
 
-/* Nút bấm màu nâu cà phê */
+.login-card {
+    -fx-background-color: white;
+    -fx-background-radius: 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0, 0, 6);
+}
+
+/* ===== Ô NHẬP LIỆU (TextField / PasswordField) ===== */
+.text-field, .password-field {
+    -fx-background-color: #FAFAFA;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #D8D2C7;
+    -fx-border-width: 1.5;
+    -fx-padding: 10 14 10 14;
+    -fx-font-size: 14px;
+    -fx-transition: -fx-border-color 0.2s;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #6D4C41; /* nâu, đồng bộ nút chính */
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(109,76,65,0.25), 6, 0, 0, 0);
+}
+
+/* ===== NÚT CHÍNH (btn-primary) ===== */
 .btn-primary {
-    -fx-background-color: #5D4037;
+    -fx-background-color: #6D4C41; /* nâu quán cà phê */
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-padding: 10px 20px;
-    -fx-background-radius: 5px;
+    -fx-background-radius: 10;
+    -fx-padding: 12 20 12 20;
     -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(109,76,65,0.35), 8, 0, 0, 3);
 }
 
 .btn-primary:hover {
+    -fx-background-color: #5D4037; /* đậm hơn khi hover */
+    -fx-effect: dropshadow(gaussian, rgba(109,76,65,0.5), 12, 0, 0, 4);
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.btn-primary:pressed {
     -fx-background-color: #4E342E;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* ===== NÚT XÓA (đỏ, dùng trong Menu) ===== */
+.button:hover {
+    -fx-cursor: hand;
+}
+
+/* ===== BẢNG DỮ LIỆU (TableView trong màn hình Menu) ===== */
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-border-color: #E8E1D5;
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.06), 6, 0, 0, 2);
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #F5F1EB;
+    -fx-background-radius: 12 12 0 0;
+    -fx-border-color: transparent transparent #E8E1D5 transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #5D4037;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent #F0EBE1 transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #FCFAF7;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #EFE5DD;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #F5F1EB;
+}
+/* ===== LABEL THÔNG BÁO LỖI ===== */
+#messageLabel {
+    -fx-font-size: 12px;
+}
+/* ===== SUBTITLE ===== */
+.subtitle-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #8D6E63;
+}
+
+/* ===== BADGE TRẠNG THÁI (statusLabel ở màn hình chính) ===== */
+.status-badge {
+    -fx-background-color: #E8F5E9;
+    -fx-text-fill: #2E7D32;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 6 16 6 16;
+}
+
+/* ===== NÚT PHỤ (xanh lá, dùng cho "Quản lý thực đơn", "Sửa") ===== */
+.btn-secondary {
+    -fx-background-color: #2E7D32;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 12 20 12 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(46,125,50,0.35), 8, 0, 0, 3);
+}
+
+.btn-secondary:hover {
+    -fx-background-color: #256428;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+.btn-secondary:pressed {
+    -fx-background-color: #1B5E20;
+    -fx-scale-x: 0.98;
+    -fx-scale-y: 0.98;
+}
+
+/* ===== NÚT NGUY HIỂM (Xóa) ===== */
+.btn-danger {
+    -fx-background-color: #D32F2F;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 12 20 12 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(211,47,47,0.35), 8, 0, 0, 3);
+}
+
+.btn-danger:hover {
+    -fx-background-color: #B71C1C;
+    -fx-scale-x: 1.02;
+    -fx-scale-y: 1.02;
+}
+
+/* ===== KHUNG BÊN TRÁI Ở MÀN HÌNH MENU (side-card) ===== */
+.side-card {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 10, 0, 0, 3);
+}
+
+/* ===== NHÃN TIÊU ĐỀ NHỎ (Thông tin món) ===== */
+.section-label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6D4C41;
 }

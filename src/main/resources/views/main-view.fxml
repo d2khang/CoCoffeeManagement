@@ -3,14 +3,27 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+<VBox alignment="CENTER" spacing="25.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="cocoffee.controllers.MainController"
-      stylesheets="@../styles/style.css">
+      stylesheets="@../styles/style.css" prefWidth="600" prefHeight="400"
+      style="-fx-background-color: #F5F1EB;">
 
-    <Label text="CỎ Coffee &amp; Tea" styleClass="title-text"/>
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
 
-    <Label fx:id="statusLabel" text="Đang kiểm tra cơ sở dữ liệu..."/>
+    <VBox alignment="CENTER" spacing="6">
+        <Label text="CỎ Coffee &amp; Tea" styleClass="title-text"/>
+        <Label text="Hệ thống quản lý bán hàng" styleClass="subtitle-text"/>
+    </VBox>
 
-    <Button text="Bắt Đầu Bán Hàng" styleClass="btn-primary" onAction="#onStartButtonClick"/>
+    <Label fx:id="statusLabel" text="Cơ sở dữ liệu SQLite: ĐÃ KẾT NỐI THÀNH CÔNG!" styleClass="status-badge"/>
+
+    <HBox alignment="CENTER" spacing="20">
+        <Button text="🛒 Bắt Đầu Bán Hàng" styleClass="btn-primary" onAction="#onStartButtonClick"/>
+        <Button text="📋 Quản Lý Thực Đơn" styleClass="btn-secondary" onAction="#onMenuManagementClick"/>
+    </HBox>
 </VBox>
