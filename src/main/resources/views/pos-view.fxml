@@ -9,13 +9,15 @@
 
     <VBox spacing="10" HBox.hgrow="ALWAYS" prefWidth="450">
         <HBox spacing="20" alignment="CENTER_LEFT">
-            <Button text="⬅ Quay lại" onAction="#handleBackToMain" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+            <Button text="⬅ Quay lại" onAction="#handleBackToMain" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold;"/>
             <Label text="THỰC ĐƠN" styleClass="title-text"/>
         </HBox>
+
         <HBox spacing="10" alignment="CENTER_LEFT">
-            <Label text="Lọc danh mục:" style="-fx-font-weight: bold;"/>
-            <ComboBox fx:id="categoryComboBox" promptText="Tất cả đồ uống" prefWidth="200"/>
+            <TextField fx:id="productSearchField" promptText="🔍 Tìm món nhanh (Enter)..." HBox.hgrow="ALWAYS"/>
+            <ComboBox fx:id="categoryComboBox" promptText="Tất cả danh mục" prefWidth="150"/>
         </HBox>
+
         <TableView fx:id="productTable" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn text="Tên Đồ Uống" prefWidth="220">
@@ -26,15 +28,17 @@
                 </TableColumn>
             </columns>
         </TableView>
+
         <HBox alignment="CENTER_RIGHT" spacing="10">
-            <Label text="Số lượng:"/>
+            <Label text="Số lượng:" style="-fx-font-weight: bold;"/>
             <TextField fx:id="qtyField" text="1" prefWidth="50" alignment="CENTER"/>
             <Button text="Thêm Vào Hóa Đơn ➔" styleClass="btn-primary" onAction="#handleAddToCart"/>
         </HBox>
     </VBox>
 
-    <VBox spacing="10" HBox.hgrow="ALWAYS" prefWidth="400" style="-fx-background-color: #f4f4f4; -fx-padding: 15; -fx-border-color: #ddd; -fx-border-radius: 5;">
+    <VBox spacing="10" HBox.hgrow="ALWAYS" prefWidth="400" style="-fx-background-color: #f9f9f9; -fx-padding: 15; -fx-border-color: #ddd; -fx-border-radius: 5;">
         <Label fx:id="currentInvoiceLabel" text="CHƯA CHỌN HÓA ĐƠN" styleClass="title-text" style="-fx-font-size: 18px; -fx-text-fill: #1565C0;"/>
+
         <TableView fx:id="cartTable" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn text="Tên món" prefWidth="160">
@@ -43,29 +47,41 @@
                 <TableColumn text="SL" prefWidth="50">
                     <cellValueFactory><PropertyValueFactory property="quantity"/></cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="cartTotalColumn" text="Thành Tiền" prefWidth="120"/>
+                <TableColumn fx:id="cartTotalColumn" text="Thành Tiền" prefWidth="120">
+                    <cellValueFactory><PropertyValueFactory property="total"/></cellValueFactory>
+                </TableColumn>
             </columns>
         </TableView>
 
         <HBox spacing="10" alignment="CENTER">
-            <Button text="Xóa món" style="-fx-background-color: #D32F2F; -fx-text-fill: white;" onAction="#handleRemoveFromCart"/>
-            <Button text="Lưu Tạm" style="-fx-background-color: #F57C00; -fx-text-fill: white;" HBox.hgrow="ALWAYS" maxWidth="Infinity" onAction="#handleSaveInvoice"/>
+            <Button text="Xóa món" styleClass="btn-danger" onAction="#handleRemoveFromCart"/>
+            <Button text="Chờ thanh toán" styleClass="btn-warning" HBox.hgrow="ALWAYS" maxWidth="Infinity" onAction="#handleSaveInvoice"/>
+            <Button text="Hủy giao dịch" styleClass="btn-danger" onAction="#handleVoidInvoice"/>
         </HBox>
+
         <Separator/>
         <HBox alignment="CENTER_RIGHT" spacing="15">
             <Label text="TỔNG TIỀN:" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
             <Label fx:id="totalAmountLabel" text="0 Đ" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #D32F2F;"/>
         </HBox>
+
         <HBox spacing="10" alignment="CENTER">
-            <ComboBox fx:id="paymentMethodComboBox" promptText="Phương thức" prefWidth="120"/>
-            <Button text="THANH TOÁN" styleClass="btn-primary" style="-fx-font-size: 16px; -fx-background-color: #2E7D32;" HBox.hgrow="ALWAYS" maxWidth="Infinity" onAction="#handleCheckout"/>
+            <ComboBox fx:id="paymentMethodComboBox" promptText="Phương thức" prefWidth="130"/>
+            <Button text="XÁC NHẬN THANH TOÁN" styleClass="btn-success" style="-fx-font-size: 16px;" HBox.hgrow="ALWAYS" maxWidth="Infinity" onAction="#handleCheckout"/>
         </HBox>
         <Label fx:id="messageLabel" text="" wrapText="true" alignment="CENTER" maxWidth="Infinity"/>
     </VBox>
 
-    <VBox spacing="10" prefWidth="250" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-color: #ddd; -fx-border-radius: 5;">
-        <Label text="HÓA ĐƠN CHỜ (OPEN)" styleClass="title-text" style="-fx-font-size: 16px;"/>
+    <VBox spacing="10" prefWidth="280" style="-fx-background-color: #ffffff; -fx-padding: 15; -fx-border-color: #ddd; -fx-border-radius: 5;">
+        <Label text="HÓA ĐƠN CHỜ" styleClass="title-text" style="-fx-font-size: 16px;"/>
+
+        <TextField fx:id="invoiceSearchField" promptText="🔍 Tìm hóa đơn (mã/bàn)..."/>
+
         <ListView fx:id="openInvoicesListView" VBox.vgrow="ALWAYS"/>
-        <Button text="+ TẠO HÓA ĐƠN MỚI" style="-fx-background-color: #1565C0; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;" maxWidth="Infinity" onAction="#handleCreateNewInvoice"/>
+
+        <HBox spacing="10">
+            <ComboBox fx:id="tableSelectionComboBox" prefWidth="120" promptText="Chọn bàn..."/>
+            <Button text="+ TẠO MỚI" styleClass="btn-primary" style="-fx-font-size: 14px; -fx-font-weight: bold;" HBox.hgrow="ALWAYS" maxWidth="Infinity" onAction="#handleCreateNewInvoice"/>
+        </HBox>
     </VBox>
 </HBox>

@@ -50,11 +50,12 @@ public class DatabaseConfig {
             );
         """;
 
-        // Version 0.5: Bảng Invoice - Không còn table_id
+        // 🌟 ĐÃ SỬA: Bảng Invoice - Bổ sung thêm table_number
         String createInvoiceTable = """
             CREATE TABLE IF NOT EXISTS Invoice (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 invoice_code TEXT NOT NULL UNIQUE,
+                table_number TEXT NULL, 
                 employee_id INTEGER NOT NULL,
                 subtotal REAL NOT NULL DEFAULT 0,
                 discount REAL NOT NULL DEFAULT 0,
@@ -83,14 +84,26 @@ public class DatabaseConfig {
 
         String insertDefaultAdmin = """
             INSERT OR IGNORE INTO Employee (id, username, password_hash, full_name, role)
-            VALUES (1, 'admin', '$2a$10$c8dqA.PvGrTbGaYSK30KoeR2QLyygQfIGukapYO2h5c627EFhAMm2', 'Chủ Quán CỎ', 'ADMIN');
+            VALUES (1, 'admin', '$2a$10$iVCGiFV/dlSXuCXBPTuEn.nw8shJOKkVcrBsn1VtLp6WV5nvwdE/a', 'Chủ Quán CỎ', 'ADMIN');
         """;
 
+        // 🌟 ĐÃ SỬA: Danh mục mới cực kỳ chi tiết theo yêu cầu của bạn
         String insertDefaultCategories = """
             INSERT OR IGNORE INTO Category (id, name, description) VALUES
-            (1, 'Cà Phê', 'Các loại cà phê pha phin, pha máy'),
-            (2, 'Trà Trái Cây', 'Trà kết hợp trái cây tươi'),
-            (3, 'Đá Xay', 'Thức uống đá xay giải nhiệt');
+            (1, 'Cà Phê', 'Pha phin, pha máy'),
+            (2, 'Trà', 'Trà trái cây, trà hoa'),
+            (3, 'Trà sữa', 'Các loại trà sữa truyền thống'),
+            (4, 'Sinh tố', 'Sinh tố trái cây tươi'),
+            (5, 'Latte', 'Latte nóng và lạnh'),
+            (6, 'Topping', 'Trân châu, thạch, pudding'),
+            (7, 'Nước ép', 'Ép nguyên chất'),
+            (8, 'Yogurt', 'Yogurt trái cây'),
+            (9, 'Soda', 'Soda mix'),
+            (10, 'Đồ ăn vặt', 'Snacks'),
+            (11, 'Bánh tráng trộn', 'Ăn vặt'),
+            (12, 'Mì trộn Hàn', 'Mì trộn cay'),
+            (13, 'Mì trộn Việt', 'Mì trộn truyền thống'),
+            (14, 'Combo cá viên chiên', 'Đồ ăn nhanh');
         """;
 
         // ==========================================

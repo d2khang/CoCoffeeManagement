@@ -11,12 +11,13 @@ public class Invoice {
     private String status; // 'OPEN', 'PAID', 'CANCELLED'
     private String createdAt;
     private String paidAt;
-
+    private String tableNumber;
     public Invoice() {}
 
-    public Invoice(int id, String invoiceCode, int employeeId, double subtotal, double discount, double total, String paymentMethod, String status, String createdAt, String paidAt) {
+    public Invoice(int id, String invoiceCode,String tableNumber, int employeeId, double subtotal, double discount, double total, String paymentMethod, String status, String createdAt, String paidAt) {
         this.id = id;
         this.invoiceCode = invoiceCode;
+        this.tableNumber = tableNumber;
         this.employeeId = employeeId;
         this.subtotal = subtotal;
         this.discount = discount;
@@ -27,6 +28,8 @@ public class Invoice {
         this.paidAt = paidAt;
     }
 
+    public String getTableNumber() { return tableNumber; }
+    public void setTableNumber(String tableNumber) { this.tableNumber = tableNumber; }
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 

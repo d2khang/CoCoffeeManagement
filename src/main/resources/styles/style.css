@@ -209,3 +209,36 @@
 #messageLabel {
     -fx-font-size: 12px;
 }
+/* --- NÚT BẤM POS CHUYÊN NGHIỆP --- */
+.btn-danger {
+    -fx-background-color: #D32F2F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.btn-danger:hover { -fx-background-color: #B71C1C; }
+
+.btn-warning {
+    -fx-background-color: #F57C00;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.btn-warning:hover { -fx-background-color: #E65100; }
+
+.btn-success {
+    -fx-background-color: #2E7D32;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.btn-success:hover { -fx-background-color: #1B5E20; }
+
+/* --- BADGE TRẠNG THÁI (NHÃN) --- */
+.badge-open {
+    -fx-background-color: #FFF9C4;
+    -fx-text-fill: #F57F17;
+    -fx-padding: 3 8 3 8;
+    -fx-background-radius: 12;
+    -fx-font-weight: bold;
+}
