@@ -4,20 +4,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox alignment="CENTER" spacing="18.0" xmlns:fx="http://javafx.com/fxml"
+<VBox alignment="CENTER" spacing="16.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="cocoffee.controllers.LoginController"
-      stylesheets="@../styles/style.css" prefWidth="340" prefHeight="300"
-      maxWidth="340" maxHeight="300" styleClass="login-card">
+      stylesheets="@../styles/style.css" prefWidth="360" prefHeight="340"
+      maxWidth="360" maxHeight="340" styleClass="login-card">
 
     <padding>
-        <Insets top="30" right="30" bottom="30" left="30"/>
+        <Insets top="34" right="34" bottom="34" left="34"/>
     </padding>
 
-    <Label text="ĐĂNG NHẬP" styleClass="title-text"/>
+    <Label text="☕" style="-fx-font-size: 34px;"/>
+    <Label text="CỎ COFFEE &amp; TEA" styleClass="title-text"/>
+    <Label text="Đăng nhập để tiếp tục" styleClass="subtitle-text"/>
 
-    <TextField fx:id="usernameField" promptText="Tên đăng nhập"/>
-    <!-- 🌟 ĐÃ THÊM: onAction để bấm Enter tại ô Mật khẩu là đăng nhập luôn -->
-    <PasswordField fx:id="passwordField" promptText="Mật khẩu" onAction="#handleLogin"/>
+    <VBox spacing="12" style="-fx-padding: 10 0 0 0;">
+        <TextField fx:id="usernameField" promptText="👤  Tên đăng nhập"/>
+        <PasswordField fx:id="passwordField" promptText="🔒  Mật khẩu" onAction="#handleLogin"/>
+    </VBox>
 
     <HBox alignment="CENTER_LEFT">
         <CheckBox fx:id="rememberMeCheckBox" text="Nhớ tên đăng nhập"/>
@@ -25,5 +28,5 @@
 
     <Button text="Đăng nhập" styleClass="btn-primary" onAction="#handleLogin" prefWidth="Infinity"/>
 
-    <Label fx:id="messageLabel" text="" style="-fx-text-fill: #D32F2F;"/>
+    <Label fx:id="messageLabel" text="" wrapText="true" style="-fx-text-fill: #D32F2F;"/>
 </VBox>

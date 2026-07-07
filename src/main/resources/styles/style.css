@@ -242,3 +242,299 @@
     -fx-background-radius: 12;
     -fx-font-weight: bold;
 }
+/* --- SIDEBAR BUTTONS (giữ để tương thích ngược) --- */
+.sidebar-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ECF0F1;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 13 16 13 16;
+    -fx-cursor: hand;
+    -fx-background-radius: 10;
+}
+
+.sidebar-btn:hover {
+    -fx-background-color: #34495E;
+    -fx-text-fill: #4FC3F7;
+}
+
+.sidebar-btn:pressed {
+    -fx-background-color: #3A536B;
+}
+
+/* --- SIDEBAR NÚT ĐỔI MẬT KHẨU --- */
+.sidebar-btn-outline {
+    -fx-background-color: transparent;
+    -fx-border-color: #7F8C8D;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-text-fill: #BDC3C7;
+    -fx-font-size: 13px;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+}
+
+.sidebar-btn-outline:hover {
+    -fx-background-color: #7F8C8D;
+    -fx-text-fill: white;
+}
+
+/* --- SIDEBAR NÚT ĐĂNG XUẤT --- */
+.sidebar-btn-danger {
+    -fx-background-color: transparent;
+    -fx-border-color: #E74C3C;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-text-fill: #E74C3C;
+    -fx-font-size: 13px;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+}
+
+.sidebar-btn-danger:hover {
+    -fx-background-color: #E74C3C;
+    -fx-text-fill: white;
+}
+
+
+/* ================================================
+   ===== BỔ SUNG MỚI: SIDEBAR KIỂU VSCODE =====
+   (Dùng cho MainView.fxml phiên bản nâng cấp)
+   ================================================ */
+
+.sidebar {
+    -fx-background-color: #24303D;
+    -fx-padding: 22 14 20 14;
+}
+
+.sidebar-header {
+    -fx-padding: 0 0 16 0;
+}
+
+.sidebar-avatar {
+    -fx-fill: #34495E;
+    -fx-stroke: #1ABC9C;
+    -fx-stroke-width: 1.5;
+}
+
+.sidebar-brand {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.sidebar-user {
+    -fx-text-fill: #1ABC9C;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.sidebar-separator .line {
+    -fx-border-color: #34495E transparent transparent transparent;
+}
+
+.sidebar-menu {
+    -fx-padding: 10 0 0 0;
+}
+
+/* Mỗi mục menu là 1 hàng: thanh màu (indicator) + nút bấm */
+.sidebar-item {
+    -fx-background-radius: 10;
+}
+
+.sidebar-item:hover {
+    -fx-background-color: #2E3D4E;
+}
+
+/* Thanh dọc màu xanh bên trái, giống VSCode. Mặc định trong suốt,
+   có thể set styleClass="sidebar-indicator active" từ controller
+   để hiển thị khi đang ở đúng trang. */
+.sidebar-indicator {
+    -fx-pref-width: 4;
+    -fx-min-width: 4;
+    -fx-max-width: 4;
+    -fx-pref-height: 20;
+    -fx-background-color: transparent;
+    -fx-background-radius: 3;
+}
+
+.sidebar-indicator.active {
+    -fx-background-color: #1ABC9C;
+}
+
+.sidebar-footer {
+    -fx-padding: 10 0 0 0;
+}
+
+/* ===== KHU VỰC NỘI DUNG BÊN PHẢI ===== */
+.content-area {
+    -fx-background-color: #ECF0F1;
+}
+
+.welcome-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #607D8B;
+}
+
+.welcome-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: #95A5A6;
+}
+
+/* ================================================
+   ===== BỔ SUNG MỚI: MÀN HÌNH POS =====
+   ================================================ */
+
+/* ListView "Hóa đơn chờ" hòa vào card trắng, bỏ viền mặc định của JavaFX */
+.invoice-list {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.invoice-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-padding: 4 0 4 0;
+}
+
+.invoice-list .list-cell:filled:hover {
+    -fx-background-color: #F5F1EB;
+    -fx-background-radius: 8;
+}
+
+.invoice-list .list-cell:filled:selected {
+    -fx-background-color: #E8F5E9;
+    -fx-background-radius: 8;
+}
+
+/* Badge hóa đơn chờ trong ListView (dùng ở PosController) */
+.badge-open {
+    -fx-background-color: #FFF9C4;
+    -fx-text-fill: #F57F17;
+    -fx-padding: 6 10 6 10;
+    -fx-background-radius: 10;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+}
+
+/* Dòng tổng tiền có nền nhấn nhẹ, nổi bật trước khi thanh toán */
+.total-row {
+    -fx-background-color: #FFF3E0;
+    -fx-background-radius: 10;
+    -fx-padding: 10 14 10 14;
+}
+
+/* ================================================
+   ===== BỔ SUNG MỚI: BADGE TRẠNG THÁI (Menu & History) =====
+   ================================================ */
+.status-pill {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 4 14 4 14;
+}
+
+.status-pill-success {
+    -fx-background-color: #E8F5E9;
+    -fx-text-fill: #2E7D32;
+}
+
+.status-pill-danger {
+    -fx-background-color: #FFEBEE;
+    -fx-text-fill: #C62828;
+}
+
+.status-pill-warning {
+    -fx-background-color: #FFF3E0;
+    -fx-text-fill: #E65100;
+}
+
+.status-pill-hidden {
+    -fx-background-color: #ECEFF1;
+    -fx-text-fill: #607D8B;
+}
+
+/* ================================================
+   ===== BỔ SUNG MỚI: THẺ THỐNG KÊ (History Dashboard) =====
+   ================================================ */
+.stat-card {
+    -fx-background-color: white;
+    -fx-background-radius: 14;
+    -fx-padding: 16 18 16 18;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.07), 8, 0, 0, 3);
+}
+
+.stat-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #8D6E63;
+}
+
+.stat-value {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #3E2723;
+}
+
+.stat-card-success .stat-value { -fx-text-fill: #1B5E20; }
+.stat-card-info .stat-value    { -fx-text-fill: #0D47A1; }
+.stat-card-danger .stat-value  { -fx-text-fill: #B71C1C; }
+
+.stat-card-success { -fx-border-color: #C8E6C9; -fx-border-radius: 14; -fx-border-width: 1; }
+.stat-card-info    { -fx-border-color: #BBDEFB; -fx-border-radius: 14; -fx-border-width: 1; }
+.stat-card-danger  { -fx-border-color: #FFCDD2; -fx-border-radius: 14; -fx-border-width: 1; }
+
+/* ================================================
+   ===== BỔ SUNG MỚI: THANH TÌM KIẾM & BỘ LỌC (History) =====
+   ================================================ */
+.filter-bar {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-padding: 12 14 12 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.05), 6, 0, 0, 2);
+}
+
+.segmented-bar {
+    -fx-background-color: #FFF8E1;
+    -fx-background-radius: 12;
+    -fx-padding: 12 14 12 14;
+    -fx-border-color: #FFE082;
+    -fx-border-radius: 12;
+    -fx-border-width: 1;
+}
+
+/* Nhóm 3 nút Ngày/Tháng/Năm dính liền nhau như 1 khối segmented control */
+.segmented-group {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-border-color: #D8D2C7;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+}
+
+.segmented-toggle {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+    -fx-text-fill: #6D4C41;
+    -fx-font-weight: bold;
+    -fx-padding: 8 18 8 18;
+    -fx-cursor: hand;
+}
+
+.segmented-toggle:selected {
+    -fx-background-color: #6D4C41;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+}
+
+.segmented-toggle:hover {
+    -fx-background-color: #F5F1EB;
+}
+
+.segmented-toggle:selected:hover {
+    -fx-background-color: #5D4037;
+}
+
+

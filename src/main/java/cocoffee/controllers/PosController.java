@@ -56,8 +56,8 @@ public class PosController {
 
     @FXML
     public void initialize() {
-        productTable.setPlaceholder(new Label("Chưa có món đồ uống nào."));
-        cartTable.setPlaceholder(new Label("Chưa có món nào, hãy chọn từ thực đơn bên trái."));
+        productTable.setPlaceholder(buildFriendlyPlaceholder("🍹", "Chưa có món đồ uống nào"));
+        cartTable.setPlaceholder(buildFriendlyPlaceholder("🧾", "Hãy chọn một hóa đơn để xem chi tiết"));
 
         setupMenu();
         setupCart();
@@ -380,6 +380,19 @@ public class PosController {
                 showMessage("Lỗi hệ thống: Thanh toán không thành công!", "red");
             }
         }
+    }
+
+    // 🌟 MỚI: Placeholder thân thiện hơn cho bảng rỗng (icon lớn + chữ mô tả)
+    private javafx.scene.layout.VBox buildFriendlyPlaceholder(String icon, String text) {
+        javafx.scene.control.Label iconLabel = new javafx.scene.control.Label(icon);
+        iconLabel.setStyle("-fx-font-size: 32px;");
+
+        javafx.scene.control.Label textLabel = new javafx.scene.control.Label(text);
+        textLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #9E9E9E;");
+
+        javafx.scene.layout.VBox box = new javafx.scene.layout.VBox(8, iconLabel, textLabel);
+        box.setAlignment(javafx.geometry.Pos.CENTER);
+        return box;
     }
 
     private void showMessage(String msg, String color) {

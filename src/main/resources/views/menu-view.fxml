@@ -7,55 +7,59 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="cocoffee.controllers.MenuController"
             stylesheets="@../styles/style.css" style="-fx-background-color: #F5F1EB;">
 
-    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+    <padding><Insets top="18" right="18" bottom="18" left="18"/></padding>
 
     <top>
-        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 0 0 20 0;">
-            <Button text="⬅ Quay lại" onAction="#handleBackToMain" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold;"/>
-            <Label text="QUẢN LÝ THỰC ĐƠN" styleClass="title-text" />
+        <HBox spacing="14" alignment="CENTER_LEFT" style="-fx-padding: 0 0 16 0;">
+            <Button text="⬅" onAction="#handleBackToMain" styleClass="btn-secondary" style="-fx-background-color: #9E9E9E; -fx-padding: 8 14 8 14;"/>
+            <Label text="🍹 QUẢN LÝ THỰC ĐƠN" styleClass="title-text"/>
         </HBox>
     </top>
 
     <left>
-        <VBox spacing="14" prefWidth="260" styleClass="side-card">
+        <VBox spacing="14" prefWidth="270" styleClass="side-card">
             <padding><Insets top="20" right="18" bottom="20" left="18"/></padding>
 
             <Label text="Thông tin món" styleClass="section-label"/>
 
             <TextField fx:id="nameField" promptText="Tên đồ uống (VD: Cà phê sữa)"/>
-            <ComboBox fx:id="categoryComboBox" promptText="Chọn danh mục" prefWidth="Infinity"/>
+            <ComboBox fx:id="categoryComboBox" promptText="Chọn danh mục" prefWidth="Infinity" maxWidth="Infinity"/>
             <TextField fx:id="priceField" promptText="Giá tiền (VNĐ)"/>
-            <ComboBox fx:id="statusComboBox" promptText="Trạng thái" prefWidth="Infinity"/>
+            <ComboBox fx:id="statusComboBox" promptText="Trạng thái" prefWidth="Infinity" maxWidth="Infinity"/>
 
             <HBox spacing="8">
-                <Button text="Thêm" styleClass="btn-primary" onAction="#handleAddProduct"/>
-                <Button text="Sửa" styleClass="btn-secondary" onAction="#handleUpdateProduct"/>
-                <Button text="Xóa" styleClass="btn-danger" onAction="#handleDeleteProduct"/>
+                <Button text="➕ Thêm" styleClass="btn-primary" onAction="#handleAddProduct" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                <Button text="✏ Sửa" styleClass="btn-secondary" onAction="#handleUpdateProduct" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                <Button text="🗑 Xóa" styleClass="btn-danger" onAction="#handleDeleteProduct" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
             </HBox>
 
-            <Label fx:id="messageLabel" text="" wrapText="true" style="-fx-text-fill: #D32F2F; -fx-font-size: 12px;"/>
+            <Label fx:id="messageLabel" text="" wrapText="true" style="-fx-text-fill: #D32F2F; -fx-font-size: 12px; -fx-font-weight: bold;"/>
         </VBox>
     </left>
 
     <center>
-        <TableView fx:id="productTable">
+        <VBox styleClass="side-card">
             <BorderPane.margin>
-                <Insets top="18" right="0" bottom="0" left="18"/>
+                <Insets top="0" right="0" bottom="0" left="18"/>
             </BorderPane.margin>
-            <columns>
-                <TableColumn text="ID" prefWidth="50">
-                    <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
-                </TableColumn>
-                <TableColumn text="Tên Món" prefWidth="200">
-                    <cellValueFactory><PropertyValueFactory property="name"/></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="priceColumn" text="Giá (VNĐ)" prefWidth="120">
-                    <cellValueFactory><PropertyValueFactory property="price"/></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="statusColumn" text="Trạng thái" prefWidth="120">
-                    <cellValueFactory><PropertyValueFactory property="status"/></cellValueFactory>
-                </TableColumn>
-            </columns>
-        </TableView>
+            <padding><Insets top="14" right="14" bottom="14" left="14"/></padding>
+
+            <TableView fx:id="productTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn text="ID" prefWidth="50">
+                        <cellValueFactory><PropertyValueFactory property="id"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Tên Món" prefWidth="220">
+                        <cellValueFactory><PropertyValueFactory property="name"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="priceColumn" text="Giá (VNĐ)" prefWidth="130">
+                        <cellValueFactory><PropertyValueFactory property="price"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="statusColumn" text="Trạng thái" prefWidth="130">
+                        <cellValueFactory><PropertyValueFactory property="status"/></cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </VBox>
     </center>
 </BorderPane>

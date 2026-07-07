@@ -50,15 +50,26 @@ public class MenuController {
             }
         });
 
-        // 2. ĐÃ THÊM: Phiên dịch cột Trạng thái sang Tiếng Việt trên Bảng
+        // 2. ĐÃ THÊM: Phiên dịch cột Trạng thái sang Tiếng Việt trên Bảng + hiển thị dạng Badge màu
         statusColumn.setCellFactory(column -> new TableCell<Product, String>() {
             @Override
             protected void updateItem(String status, boolean empty) {
                 super.updateItem(status, empty);
                 if (empty || status == null) {
                     setText(null);
+                    setGraphic(null);
                 } else {
-                    setText(toViStatus(status)); // Gọi hàm dịch sang tiếng Việt
+                    Label badge = new Label(toViStatus(status));
+                    badge.getStyleClass().add("status-pill");
+                    if ("OUT_OF_STOCK".equals(status)) {
+                        badge.getStyleClass().add("status-pill-warning");
+                    } else if ("HIDDEN".equals(status)) {
+                        badge.getStyleClass().add("status-pill-hidden");
+                    } else {
+                        badge.getStyleClass().add("status-pill-success");
+                    }
+                    setGraphic(badge);
+                    setText(null);
                 }
             }
         });

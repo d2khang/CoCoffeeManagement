@@ -1,121 +1,110 @@
 package cocoffee.controllers;
 
-import cocoffee.config.DatabaseConfig;
-import cocoffee.models.Employee; // 🌟 NHỚ IMPORT MODEL EMPLOYEE
+import cocoffee.models.Employee;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import java.sql.Connection;
 
 public class MainController {
 
-    @FXML
-    private Label statusLabel;
+    @FXML private Label statusLabel;
+    @FXML private StackPane contentArea; // Khung chứa nội dung ở giữa
 
-    // 🌟 THÊM BIẾN NÀY: Để lưu trữ thông tin người đang đăng nhập
+    // 🌟 MỚI: 3 thanh chỉ báo (indicator) màu xanh bên trái mỗi mục sidebar
+    @FXML private Region indicatorPos;
+    @FXML private Region indicatorMenu;
+    @FXML private Region indicatorHistory;
+
     private Employee currentEmployee;
 
-    @FXML
-    public void initialize() {
-        try (Connection conn = DatabaseConfig.getConnection()) {
-            if (conn != null) {
-                statusLabel.setText("Cơ sở dữ liệu SQLite: ĐÃ KẾT NỐI THÀNH CÔNG!");
-                statusLabel.setStyle("-fx-text-fill: #2E7D32; -fx-font-weight: bold;");
-            }
-        } catch (Exception e) {
-            statusLabel.setText("Lỗi kết nối: " + e.getMessage());
-            statusLabel.setStyle("-fx-text-fill: #D32F2F; -fx-font-weight: bold;");
-        }
-    }
-
-    // 🌟 THÊM HÀM NÀY: Hàm hứng dữ liệu từ LoginController truyền sang
     public void setCurrentEmployee(Employee employee) {
         this.currentEmployee = employee;
-        // Đổi dòng trạng thái thành lời chào nhân viên
-        statusLabel.setText("Xin chào, " + employee.getFullName() + " (" + employee.getRole() + ")");
-        statusLabel.setStyle("-fx-text-fill: #1565C0; -fx-font-weight: bold;");
+        statusLabel.setText("Xin chào, " + employee.getFullName());
     }
 
-    // ---> HÀM MỞ MÀN HÌNH BÁN HÀNG (POS) <---
+    // --- CÁC HÀM ĐIỀU HƯỚNG SIDEBAR ---
     @FXML
-    protected void onPosClick() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/pos-view.fxml"));
-            Scene posScene = new Scene(fxmlLoader.load(), 1024, 700);
+    protected void loadPosView() {
+        loadViewIntoContentArea("/views/pos-view.fxml");
+        setActiveIndicator(indicatorPos);
+    }
 
-            Stage currentStage = (Stage) statusLabel.getScene().getWindow();
-            currentStage.setScene(posScene);
-            currentStage.setTitle("CỎ Coffee & Tea - BÁN HÀNG POS");
-            currentStage.centerOnScreen();
-        } catch (Exception e) {
-            e.printStackTrace();
-            statusLabel.setText("Lỗi: Không thể mở màn hình Bán Hàng!");
-            statusLabel.setStyle("-fx-text-fill: red;");
+    @FXML
+    protected void loadMenuView() {
+        loadViewIntoContentArea("/views/menu-view.fxml");
+        setActiveIndicator(indicatorMenu);
+    }
+
+    @FXML
+    protected void loadHistoryView() {
+        loadViewIntoContentArea("/views/history-view.fxml");
+        setActiveIndicator(indicatorHistory);
+    }
+
+    // 🌟 MỚI: Bật màu cho thanh chỉ báo của mục đang được chọn, tắt màu 2 mục còn lại
+    private void setActiveIndicator(Region active) {
+        indicatorPos.getStyleClass().remove("active");
+        indicatorMenu.getStyleClass().remove("active");
+        indicatorHistory.getStyleClass().remove("active");
+
+        if (!active.getStyleClass().contains("active")) {
+            active.getStyleClass().add("active");
         }
     }
 
-    // ---> HÀM XỬ LÝ CHUYỂN SANG MÀN HÌNH MENU <---
-    @FXML
-    protected void onMenuManagementClick() {
+    // Hàm lõi: Tải FXML và nhét vào giữa màn hình
+    private void loadViewIntoContentArea(String fxmlPath) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/menu-view.fxml"));
-            Scene menuScene = new Scene(fxmlLoader.load(), 900, 600);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Node view = loader.load();
 
-            Stage currentStage = (Stage) statusLabel.getScene().getWindow();
-            currentStage.setScene(menuScene);
-            currentStage.setTitle("CỎ Coffee & Tea - Quản Lý Thực Đơn");
-            currentStage.centerOnScreen();
-
+            // Xóa nội dung cũ ở giữa, thay bằng màn hình mới
+            contentArea.getChildren().setAll(view);
         } catch (Exception e) {
             e.printStackTrace();
-            statusLabel.setText("Không thể mở màn hình quản lý thực đơn: " + e.getMessage());
-            statusLabel.setStyle("-fx-text-fill: red;");
+            System.out.println("Lỗi load màn hình: " + fxmlPath);
         }
     }
 
-    // ---> HÀM MỞ MÀN HÌNH LỊCH SỬ & THỐNG KÊ (VERSION 0.6) <---
-    @FXML
-    protected void onHistoryClick() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/history-view.fxml"));
-            Scene historyScene = new Scene(fxmlLoader.load(), 1024, 700);
-
-            Stage currentStage = (Stage) statusLabel.getScene().getWindow();
-            currentStage.setScene(historyScene);
-            currentStage.setTitle("CỎ Coffee & Tea - Lịch Sử & Doanh Thu");
-            currentStage.centerOnScreen();
-        } catch (Exception e) {
-            e.printStackTrace();
-            statusLabel.setText("Lỗi: Không thể mở màn hình Lịch Sử!");
-            statusLabel.setStyle("-fx-text-fill: red;");
-        }
-    }
-    // ---> HÀM BẬT POPUP ĐỔI MẬT KHẨU <---
+    // --- BẢO MẬT & ĐĂNG XUẤT ---
     @FXML
     protected void onChangePasswordClick() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/change-password-view.fxml"));
             Scene scene = new Scene(loader.load());
 
-            // Lấy Controller của popup và truyền nhân viên hiện tại sang
-            cocoffee.controllers.ChangePasswordController popupController = loader.getController();
+            ChangePasswordController popupController = loader.getController();
             popupController.setCurrentEmployee(currentEmployee);
 
-            // Mở một cửa sổ mới (Popup) đè lên trên
             Stage popupStage = new Stage();
             popupStage.setScene(scene);
-            popupStage.setTitle("Bảo mật - Đổi mật khẩu");
+            popupStage.setTitle("Đổi mật khẩu");
             popupStage.setResizable(false);
-            // Ép người dùng phải thao tác xong popup này mới được quay lại cửa sổ chính
             popupStage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
             popupStage.showAndWait();
 
         } catch (Exception e) {
             e.printStackTrace();
-            statusLabel.setText("Lỗi: Không thể mở cửa sổ Đổi Mật Khẩu!");
-            statusLabel.setStyle("-fx-text-fill: red;");
+        }
+    }
+
+    @FXML
+    protected void handleLogout() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login-view.fxml"));
+            Scene loginScene = new Scene(loader.load());
+
+            Stage currentStage = (Stage) statusLabel.getScene().getWindow();
+            currentStage.setScene(loginScene);
+            currentStage.setTitle("Đăng nhập - CỎ Coffee & Tea");
+            currentStage.centerOnScreen();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -4,81 +4,91 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<HBox spacing="20" xmlns:fx="http://javafx.com/fxml" fx:controller="cocoffee.controllers.HistoryController" stylesheets="@../styles/style.css">
-    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+<HBox spacing="18" xmlns:fx="http://javafx.com/fxml" fx:controller="cocoffee.controllers.HistoryController" stylesheets="@../styles/style.css" style="-fx-background-color: #F5F1EB;">
+    <padding><Insets top="18" right="18" bottom="18" left="18"/></padding>
 
     <fx:define>
         <ToggleGroup fx:id="filterModeGroup"/>
     </fx:define>
 
-    <VBox spacing="15" HBox.hgrow="ALWAYS" prefWidth="600">
-        <HBox spacing="20" alignment="CENTER_LEFT">
-            <Button text="⬅ Quay lại" onAction="#handleBackToMain" styleClass="btn-secondary" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold;"/>
-            <Label text="LỊCH SỬ HÓA ĐƠN &amp; DOANH THU" styleClass="title-text" style="-fx-font-size: 20px;"/>
+    <VBox spacing="14" HBox.hgrow="ALWAYS" prefWidth="620">
+
+        <HBox spacing="14" alignment="CENTER_LEFT">
+            <Button text="⬅" onAction="#handleBackToMain" styleClass="btn-secondary" style="-fx-background-color: #9E9E9E; -fx-padding: 8 14 8 14;"/>
+            <Label text="📊 LỊCH SỬ HÓA ĐƠN &amp; DOANH THU" styleClass="title-text" style="-fx-font-size: 19px;"/>
         </HBox>
 
-        <HBox spacing="15" alignment="CENTER">
-            <VBox spacing="5" prefWidth="180" style="-fx-background-color: #E8F5E9; -fx-padding: 10; -fx-border-color: #C8E6C9; -fx-border-radius: 5; -fx-background-radius: 5;">
-                <Label text="TỔNG DOANH THU" style="-fx-font-size: 12px; -fx-text-fill: #2E7D32; -fx-font-weight: bold;"/>
-                <Label fx:id="totalRevenueLabel" text="0 Đ" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1B5E20;"/>
+        <!-- ===== THẺ THỐNG KÊ ===== -->
+        <HBox spacing="14" alignment="CENTER">
+            <VBox spacing="6" HBox.hgrow="ALWAYS" maxWidth="Infinity" styleClass="stat-card, stat-card-success">
+                <Label text="💰 TỔNG DOANH THU" styleClass="stat-label"/>
+                <Label fx:id="totalRevenueLabel" text="0 Đ" styleClass="stat-value"/>
             </VBox>
-            <VBox spacing="5" prefWidth="180" style="-fx-background-color: #E3F2FD; -fx-padding: 10; -fx-border-color: #BBDEFB; -fx-border-radius: 5; -fx-background-radius: 5;">
-                <Label text="HÓA ĐƠN THÀNH CÔNG" style="-fx-font-size: 12px; -fx-text-fill: #1565C0; -fx-font-weight: bold;"/>
-                <Label fx:id="successCountLabel" text="0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #0D47A1;"/>
+            <VBox spacing="6" HBox.hgrow="ALWAYS" maxWidth="Infinity" styleClass="stat-card, stat-card-info">
+                <Label text="✔ HÓA ĐƠN THÀNH CÔNG" styleClass="stat-label"/>
+                <Label fx:id="successCountLabel" text="0" styleClass="stat-value"/>
             </VBox>
-            <VBox spacing="5" prefWidth="180" style="-fx-background-color: #FFEBEE; -fx-padding: 10; -fx-border-color: #FFCDD2; -fx-border-radius: 5; -fx-background-radius: 5;">
-                <Label text="HÓA ĐƠN ĐÃ HỦY (VOID)" style="-fx-font-size: 12px; -fx-text-fill: #C62828; -fx-font-weight: bold;"/>
-                <Label fx:id="cancelCountLabel" text="0" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #B71C1C;"/>
+            <VBox spacing="6" HBox.hgrow="ALWAYS" maxWidth="Infinity" styleClass="stat-card, stat-card-danger">
+                <Label text="❌ HÓA ĐƠN ĐÃ HỦY" styleClass="stat-label"/>
+                <Label fx:id="cancelCountLabel" text="0" styleClass="stat-value"/>
             </VBox>
         </HBox>
 
-        <!-- Thanh tìm kiếm / lọc theo trạng thái -->
-        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #f5f5f5; -fx-padding: 10; -fx-border-color: #ddd; -fx-border-radius: 5;">
-            <TextField fx:id="searchField" promptText="🔍 Tìm mã HD / Số bàn..." prefWidth="200"/>
-            <ComboBox fx:id="statusFilterComboBox" prefWidth="160" promptText="Tất cả trạng thái"/>
-            <Button text="Làm mới" onAction="#handleResetFilters" style="-fx-background-color: #757575; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        <!-- ===== TÌM KIẾM / LỌC TRẠNG THÁI ===== -->
+        <HBox spacing="10" alignment="CENTER_LEFT" styleClass="filter-bar">
+            <TextField fx:id="searchField" promptText="🔍 Tìm mã HD / Số bàn..." prefWidth="220"/>
+            <ComboBox fx:id="statusFilterComboBox" prefWidth="170" promptText="Tất cả trạng thái"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="↻ Làm mới" onAction="#handleResetFilters" style="-fx-background-color: #757575; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8 16 8 16; -fx-cursor: hand;"/>
         </HBox>
 
-        <!-- 🌟 MỚI: Thanh lọc theo Ngày / Tháng / Năm + In báo cáo doanh thu -->
-        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #FFF8E1; -fx-padding: 10; -fx-border-color: #FFE082; -fx-border-radius: 5;">
-            <Label text="Xem doanh thu theo:" style="-fx-font-weight: bold; -fx-text-fill: #795548;"/>
-            <ToggleButton fx:id="btnFilterDay" text="Ngày" toggleGroup="$filterModeGroup" selected="true"/>
-            <ToggleButton fx:id="btnFilterMonth" text="Tháng" toggleGroup="$filterModeGroup"/>
-            <ToggleButton fx:id="btnFilterYear" text="Năm" toggleGroup="$filterModeGroup"/>
+        <!-- ===== BỘ LỌC NGÀY / THÁNG / NĂM (segmented) + IN BÁO CÁO ===== -->
+        <HBox spacing="12" alignment="CENTER_LEFT" styleClass="segmented-bar">
+            <Label text="Xem doanh thu theo:" style="-fx-font-weight: bold; -fx-text-fill: #6D4C41;"/>
+
+            <HBox styleClass="segmented-group">
+                <ToggleButton fx:id="btnFilterDay" text="Ngày" toggleGroup="$filterModeGroup" selected="true" styleClass="segmented-toggle"/>
+                <ToggleButton fx:id="btnFilterMonth" text="Tháng" toggleGroup="$filterModeGroup" styleClass="segmented-toggle"/>
+                <ToggleButton fx:id="btnFilterYear" text="Năm" toggleGroup="$filterModeGroup" styleClass="segmented-toggle"/>
+            </HBox>
 
             <DatePicker fx:id="datePicker" prefWidth="140" promptText="Chọn ngày"/>
             <ComboBox fx:id="monthComboBox" prefWidth="100" promptText="Chọn tháng" visible="false" managed="false"/>
             <ComboBox fx:id="yearComboBox" prefWidth="100" promptText="Chọn năm" visible="false" managed="false"/>
 
             <Region HBox.hgrow="ALWAYS"/>
-            <Button text="🖨️ In báo cáo doanh thu" onAction="#handlePrintRevenueReport"
-                    style="-fx-background-color: #00695C; -fx-text-fill: white; -fx-font-weight: bold;"/>
+            <Button text="🖨️ In báo cáo doanh thu" onAction="#handlePrintRevenueReport" styleClass="btn-secondary" style="-fx-background-color: #00695C;"/>
         </HBox>
 
-        <TableView fx:id="invoiceTable" VBox.vgrow="ALWAYS">
-            <columns>
-                <TableColumn text="Mã Hóa Đơn" prefWidth="150">
-                    <cellValueFactory><PropertyValueFactory property="invoiceCode"/></cellValueFactory>
-                </TableColumn>
-                <TableColumn text="Vị trí/Bàn" prefWidth="90">
-                    <cellValueFactory><PropertyValueFactory property="tableNumber"/></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="colTotal" text="Tổng Tiền" prefWidth="110">
-                    <cellValueFactory><PropertyValueFactory property="total"/></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="colPaymentMethod" text="PTTT" prefWidth="100">
-                    <cellValueFactory><PropertyValueFactory property="paymentMethod"/></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="colStatus" text="Trạng Thái" prefWidth="110">
-                    <cellValueFactory><PropertyValueFactory property="status"/></cellValueFactory>
-                </TableColumn>
-            </columns>
-        </TableView>
+        <VBox styleClass="side-card" VBox.vgrow="ALWAYS">
+            <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+            <TableView fx:id="invoiceTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn text="Mã Hóa Đơn" prefWidth="150">
+                        <cellValueFactory><PropertyValueFactory property="invoiceCode"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Vị trí/Bàn" prefWidth="90">
+                        <cellValueFactory><PropertyValueFactory property="tableNumber"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colTotal" text="Tổng Tiền" prefWidth="110">
+                        <cellValueFactory><PropertyValueFactory property="total"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colPaymentMethod" text="PTTT" prefWidth="100">
+                        <cellValueFactory><PropertyValueFactory property="paymentMethod"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colStatus" text="Trạng Thái" prefWidth="130">
+                        <cellValueFactory><PropertyValueFactory property="status"/></cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </VBox>
     </VBox>
 
-    <VBox spacing="10" prefWidth="380" style="-fx-background-color: #f9f9f9; -fx-padding: 15; -fx-border-color: #ddd; -fx-border-radius: 5;">
-        <Label fx:id="detailsTitleLabel" text="CHI TIẾT HÓA ĐƠN" styleClass="title-text" style="-fx-font-size: 16px; -fx-text-fill: #1565C0;"/>
-        <Label fx:id="invoiceTimeLabel" text="Thời gian: --/--/----" style="-fx-font-size: 13px; -fx-text-fill: #555;"/>
+    <VBox spacing="12" prefWidth="380" styleClass="side-card">
+        <padding><Insets top="18" right="16" bottom="16" left="16"/></padding>
+
+        <Label fx:id="detailsTitleLabel" text="CHI TIẾT HÓA ĐƠN" styleClass="title-text" style="-fx-font-size: 16px;"/>
+        <Label fx:id="invoiceTimeLabel" text="Thời gian: --/--/----" style="-fx-font-size: 13px; -fx-text-fill: #8D6E63;"/>
 
         <TableView fx:id="detailTable" VBox.vgrow="ALWAYS">
             <columns>
@@ -95,7 +105,6 @@
         </TableView>
 
         <Button fx:id="reprintButton" text="🖨️ In lại hóa đơn" onAction="#handleReprintInvoice"
-                maxWidth="Infinity" disable="true"
-                style="-fx-background-color: #F57F17; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10;"/>
+                maxWidth="Infinity" disable="true" styleClass="btn-primary" style="-fx-background-color: #F57F17;"/>
     </VBox>
 </HBox>

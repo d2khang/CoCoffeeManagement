@@ -1,26 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Circle?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="cocoffee.controllers.MainController"
-      stylesheets="@../styles/style.css" prefWidth="800" prefHeight="500">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cocoffee.controllers.MainController"
+            stylesheets="@../styles/style.css" prefWidth="1280" prefHeight="720">
 
-    <Label text="CỎ Coffee &amp; Tea" styleClass="title-text" style="-fx-font-size: 32px;"/>
-    <Label fx:id="statusLabel" text="Cơ sở dữ liệu SQLite: ĐÃ KẾT NỐI THÀNH CÔNG!"/>
+    <left>
+        <VBox spacing="6" prefWidth="250" styleClass="sidebar">
 
-    <HBox alignment="CENTER" spacing="15">
-        <Button text="Bán Hàng (POS)" styleClass="btn-primary" style="-fx-font-size: 16px; -fx-padding: 10 20;" onAction="#onPosClick"/>
+            <!-- ===== VÙNG LOGO / AVATAR ===== -->
+            <VBox alignment="CENTER" spacing="8" styleClass="sidebar-header">
+                <StackPane>
+                    <Circle radius="26" styleClass="sidebar-avatar"/>
+                    <Label text="☕" style="-fx-font-size: 22px;"/>
+                </StackPane>
+                <Label text="CỎ Coffee" styleClass="sidebar-brand"/>
+                <Label fx:id="statusLabel" text="Xin chào, Admin" styleClass="sidebar-user"/>
+            </VBox>
 
-        <Button text="Quản Lý Thực Đơn" styleClass="btn-primary" style="-fx-background-color: #2E7D32; -fx-font-size: 16px; -fx-padding: 10 20;" onAction="#onMenuManagementClick"/>
+            <Separator styleClass="sidebar-separator"/>
 
-        <Button text="Lịch Sử &amp; Thống Kê" styleClass="btn-primary" style="-fx-background-color: #1565C0; -fx-font-size: 16px; -fx-padding: 10 20;" onAction="#onHistoryClick"/>
-    </HBox>
+            <!-- ===== MENU CHÍNH ===== -->
+            <VBox spacing="4" styleClass="sidebar-menu">
+                <HBox styleClass="sidebar-item" alignment="CENTER_LEFT">
+                    <Region fx:id="indicatorPos" styleClass="sidebar-indicator"/>
+                    <Button text="🛒  Bán hàng (POS)" onAction="#loadPosView" styleClass="sidebar-btn" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <HBox styleClass="sidebar-item" alignment="CENTER_LEFT">
+                    <Region fx:id="indicatorMenu" styleClass="sidebar-indicator"/>
+                    <Button text="🍹  Thực đơn" onAction="#loadMenuView" styleClass="sidebar-btn" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                </HBox>
+                <HBox styleClass="sidebar-item" alignment="CENTER_LEFT">
+                    <Region fx:id="indicatorHistory" styleClass="sidebar-indicator"/>
+                    <Button text="📊  Lịch sử &amp; Doanh thu" onAction="#loadHistoryView" styleClass="sidebar-btn" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                </HBox>
+            </VBox>
 
-    <HBox alignment="CENTER" spacing="15" style="-fx-padding: 10 0 0 0;">
-        <Button text="Đổi Mật Khẩu" styleClass="btn-primary" style="-fx-background-color: #607D8B; -fx-font-size: 16px; -fx-padding: 10 20;" onAction="#onChangePasswordClick"/>
-    </HBox>
+            <Region VBox.vgrow="ALWAYS"/>
 
-</VBox>
+            <!-- ===== VÙNG DƯỚI CÙNG ===== -->
+            <VBox spacing="8" styleClass="sidebar-footer">
+                <Button text="🔒  Đổi mật khẩu" onAction="#onChangePasswordClick" styleClass="sidebar-btn-outline" maxWidth="Infinity"/>
+                <Button text="🚪  Đăng xuất" onAction="#handleLogout" styleClass="sidebar-btn-danger" maxWidth="Infinity"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-area">
+            <VBox alignment="CENTER" spacing="12">
+                <Label text="👋" style="-fx-font-size: 42px;"/>
+                <Label text="Chào mừng đến với hệ thống POS" styleClass="welcome-title"/>
+                <Label text="Chọn một chức năng ở thanh bên trái để bắt đầu" styleClass="welcome-subtitle"/>
+            </VBox>
+        </StackPane>
+    </center>
+
+</BorderPane>

@@ -95,31 +95,35 @@ public class HistoryController {
             }
         });
 
-        // Format cột Trạng thái thành Tiếng Việt
+        // Format cột Trạng thái thành Badge bo tròn (kiểu GitHub) thay vì chỉ đổi màu chữ
         colStatus.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(String status, boolean empty) {
                 super.updateItem(status, empty);
                 if (empty || status == null) {
                     setText(null);
-                    setStyle("");
+                    setGraphic(null);
                 } else {
+                    Label badge;
                     switch (status) {
                         case "PAID":
-                            setText("🟢 Đã thanh toán");
-                            setStyle("-fx-text-fill: #2E7D32; -fx-font-weight: bold;");
+                            badge = new Label("Đã thanh toán");
+                            badge.getStyleClass().addAll("status-pill", "status-pill-success");
                             break;
                         case "CANCELLED":
-                            setText("🔴 Đã hủy");
-                            setStyle("-fx-text-fill: #C62828; -fx-font-weight: bold;");
+                            badge = new Label("Đã hủy");
+                            badge.getStyleClass().addAll("status-pill", "status-pill-danger");
                             break;
                         case "OPEN":
-                            setText("🟡 Chờ thanh toán");
-                            setStyle("-fx-text-fill: #F57F17; -fx-font-weight: bold;");
+                            badge = new Label("Chờ thanh toán");
+                            badge.getStyleClass().addAll("status-pill", "status-pill-warning");
                             break;
                         default:
-                            setText(status);
+                            badge = new Label(status);
+                            badge.getStyleClass().add("status-pill");
                     }
+                    setGraphic(badge);
+                    setText(null);
                 }
             }
         });
