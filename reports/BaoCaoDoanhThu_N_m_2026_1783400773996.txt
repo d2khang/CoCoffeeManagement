@@ -1,0 +1,24 @@
+            CỎ COFFEE & TEA
+           BÁO CÁO DOANH THU
+                Năm 2026
+
+Mã HD          PTTT                 Tiền
+----------------------------------------
+INV-20260707-120426 Tiền mặt           45,000
+INV-20260707-115748 Tiền mặt           15,000
+INV-20260707-112746 Chuyển khoản       20,000
+----------------------------------------
+TỔNG DOANH THU:                80,000 Đ
+Số HD thành công:                     3
+Số HD đã hủy:                         0
+
+        -- Chi tiết theo PTTT --
+Tiền mặt:                      60,000 Đ
+Chuyển khoản:                  20,000 Đ
+Quẹt thẻ:                           0 Đ
+
+         Người in: Chủ Quán CỎ
+Thời gian in: 2026-07-07T12:06:13.998761300
+
+
+

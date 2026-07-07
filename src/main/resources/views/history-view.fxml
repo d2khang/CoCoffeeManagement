@@ -7,6 +7,10 @@
 <HBox spacing="20" xmlns:fx="http://javafx.com/fxml" fx:controller="cocoffee.controllers.HistoryController" stylesheets="@../styles/style.css">
     <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
 
+    <fx:define>
+        <ToggleGroup fx:id="filterModeGroup"/>
+    </fx:define>
+
     <VBox spacing="15" HBox.hgrow="ALWAYS" prefWidth="600">
         <HBox spacing="20" alignment="CENTER_LEFT">
             <Button text="⬅ Quay lại" onAction="#handleBackToMain" styleClass="btn-secondary" style="-fx-background-color: #9E9E9E; -fx-text-fill: white; -fx-font-weight: bold;"/>
@@ -28,11 +32,27 @@
             </VBox>
         </HBox>
 
+        <!-- Thanh tìm kiếm / lọc theo trạng thái -->
         <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #f5f5f5; -fx-padding: 10; -fx-border-color: #ddd; -fx-border-radius: 5;">
-            <TextField fx:id="searchField" promptText="🔍 Tìm mã HD / Số bàn..." prefWidth="180"/>
-            <ComboBox fx:id="statusFilterComboBox" prefWidth="140" promptText="Tất cả trạng thái"/>
-            <DatePicker fx:id="datePicker" prefWidth="150" promptText="Chọn ngày lọc..."/>
+            <TextField fx:id="searchField" promptText="🔍 Tìm mã HD / Số bàn..." prefWidth="200"/>
+            <ComboBox fx:id="statusFilterComboBox" prefWidth="160" promptText="Tất cả trạng thái"/>
             <Button text="Làm mới" onAction="#handleResetFilters" style="-fx-background-color: #757575; -fx-text-fill: white; -fx-font-weight: bold;"/>
+        </HBox>
+
+        <!-- 🌟 MỚI: Thanh lọc theo Ngày / Tháng / Năm + In báo cáo doanh thu -->
+        <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-background-color: #FFF8E1; -fx-padding: 10; -fx-border-color: #FFE082; -fx-border-radius: 5;">
+            <Label text="Xem doanh thu theo:" style="-fx-font-weight: bold; -fx-text-fill: #795548;"/>
+            <ToggleButton fx:id="btnFilterDay" text="Ngày" toggleGroup="$filterModeGroup" selected="true"/>
+            <ToggleButton fx:id="btnFilterMonth" text="Tháng" toggleGroup="$filterModeGroup"/>
+            <ToggleButton fx:id="btnFilterYear" text="Năm" toggleGroup="$filterModeGroup"/>
+
+            <DatePicker fx:id="datePicker" prefWidth="140" promptText="Chọn ngày"/>
+            <ComboBox fx:id="monthComboBox" prefWidth="100" promptText="Chọn tháng" visible="false" managed="false"/>
+            <ComboBox fx:id="yearComboBox" prefWidth="100" promptText="Chọn năm" visible="false" managed="false"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="🖨️ In báo cáo doanh thu" onAction="#handlePrintRevenueReport"
+                    style="-fx-background-color: #00695C; -fx-text-fill: white; -fx-font-weight: bold;"/>
         </HBox>
 
         <TableView fx:id="invoiceTable" VBox.vgrow="ALWAYS">
@@ -73,5 +93,9 @@
                 </TableColumn>
             </columns>
         </TableView>
+
+        <Button fx:id="reprintButton" text="🖨️ In lại hóa đơn" onAction="#handleReprintInvoice"
+                maxWidth="Infinity" disable="true"
+                style="-fx-background-color: #F57F17; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10;"/>
     </VBox>
 </HBox>

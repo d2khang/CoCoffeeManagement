@@ -37,8 +37,8 @@ public class PosController {
 
     // --- KHU VỰC 3: HÓA ĐƠN CHỜ ---
     @FXML private ListView<Invoice> openInvoicesListView;
-    @FXML private ComboBox<String> tableSelectionComboBox; // Ô CHỌN BÀN
-    @FXML private TextField invoiceSearchField;             // Ô TÌM HÓA ĐƠN
+    @FXML private ComboBox<String> tableSelectionComboBox;
+    @FXML private TextField invoiceSearchField;
 
     // Các "Thợ lấy dữ liệu"
     private ProductRepository productRepository = new ProductRepository();
@@ -49,7 +49,7 @@ public class PosController {
     private ObservableList<Product> allProducts;
     private ObservableList<OrderDetail> cartItems = FXCollections.observableArrayList();
     private ObservableList<Invoice> openInvoicesList = FXCollections.observableArrayList();
-    private FilteredList<Invoice> filteredInvoices; // Danh sách hóa đơn sau khi lọc
+    private FilteredList<Invoice> filteredInvoices;
 
     private double currentTotal = 0;
     private Invoice currentInvoice = null;
@@ -62,7 +62,7 @@ public class PosController {
         setupMenu();
         setupCart();
         setupPaymentMethods();
-        setupInvoiceList(); // Setup 1 LẦN DUY NHẤT: items, cellFactory, listener chọn, listener tìm kiếm
+        setupInvoiceList();
 
         // --- NẠP DANH SÁCH 19 BÀN VÀ MANG ĐI ---
         List<String> tables = new ArrayList<>();
@@ -71,7 +71,7 @@ public class PosController {
             tables.add("Bàn " + i);
         }
         tableSelectionComboBox.setItems(FXCollections.observableArrayList(tables));
-        tableSelectionComboBox.setValue("Mang đi"); // Mặc định là mang đi
+        tableSelectionComboBox.setValue("Mang đi");
 
         loadOpenInvoices();
     }
@@ -137,13 +137,10 @@ public class PosController {
         paymentMethodComboBox.setValue("Tiền mặt");
     }
 
-    // Chạy 1 LẦN DUY NHẤT trong initialize(): gắn FilteredList, cellFactory,
-    // listener chọn item, và listener tìm kiếm hóa đơn.
     private void setupInvoiceList() {
         filteredInvoices = new FilteredList<>(openInvoicesList, p -> true);
         openInvoicesListView.setItems(filteredInvoices);
 
-        // HIỂN THỊ: Giờ | Bàn | Mã | Tiền
         openInvoicesListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Invoice item, boolean empty) {
@@ -157,7 +154,6 @@ public class PosController {
                     String code = item.getInvoiceCode();
                     String shortCode = "#" + code.substring(Math.max(0, code.length() - 4));
 
-                    // Lấy số bàn
                     String tableInfo = (item.getTableNumber() != null && !item.getTableNumber().isEmpty())
                             ? item.getTableNumber() : "Mang đi";
 
@@ -175,7 +171,6 @@ public class PosController {
             }
         });
 
-        // Lắng nghe gõ phím ở ô tìm kiếm hóa đơn
         invoiceSearchField.textProperty().addListener((obs, oldVal, newVal) -> {
             filteredInvoices.setPredicate(invoice -> {
                 if (newVal == null || newVal.isEmpty()) return true;
@@ -190,13 +185,10 @@ public class PosController {
         });
     }
 
-    // Chỉ NẠP LẠI dữ liệu gốc, không đụng vào items/cellFactory/listener nữa
-    // (những cái đó đã setup 1 lần trong setupInvoiceList()).
     private void loadOpenInvoices() {
         openInvoicesList.setAll(invoiceRepository.getOpenInvoices());
     }
 
-    // TẠO HÓA ĐƠN MỚI DỰA TRÊN BÀN ĐÃ CHỌN
     @FXML
     protected void handleCreateNewInvoice() {
         String selectedTable = tableSelectionComboBox.getValue();
@@ -205,7 +197,7 @@ public class PosController {
         Invoice newInv = invoiceRepository.createInvoice(1, selectedTable);
 
         if (newInv != null) {
-            invoiceSearchField.clear(); // Xóa từ khóa tìm kiếm để hóa đơn mới không bị lọc ẩn
+            invoiceSearchField.clear();
             loadOpenInvoices();
             for (Invoice inv : openInvoicesList) {
                 if (inv.getId() == newInv.getId()) {
@@ -215,11 +207,7 @@ public class PosController {
                 }
             }
             showMessage("Đã tạo hóa đơn cho: " + selectedTable, "blue");
-
-            // Đặt lại mặc định là Mang đi cho khách tiếp theo
             tableSelectionComboBox.setValue("Mang đi");
-
-            // Auto-focus vào ô tìm kiếm món
             productSearchField.requestFocus();
         } else {
             showMessage("Lỗi: Không thể tạo hóa đơn mới!", "red");
@@ -311,7 +299,6 @@ public class PosController {
             showMessage("Vui lòng chọn hoặc tạo hóa đơn trước khi lưu!", "red");
             return;
         }
-
         invoiceRepository.saveOrderDetails(currentInvoice.getId(), new ArrayList<>(cartItems));
         showMessage("Đã lưu Hóa đơn vào hàng chờ!", "green");
     }
@@ -343,6 +330,7 @@ public class PosController {
         }
     }
 
+    // 🌟 ĐÃ TÍCH HỢP IN BILL K80 TỰ ĐỘNG Ở ĐÂY
     @FXML
     protected void handleCheckout() {
         if (currentInvoice == null || cartItems.isEmpty()) {
@@ -356,7 +344,7 @@ public class PosController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Xác Nhận Thanh Toán");
         alert.setHeaderText("HÓA ĐƠN " + currentInvoice.getInvoiceCode());
-        alert.setContentText(String.format("Tổng tiền thu: %,.0f Đ\nPhương thức: %s\n\nBạn có muốn xuất hóa đơn?", currentTotal, displayMethod));
+        alert.setContentText(String.format("Tổng tiền thu: %,.0f Đ\nPhương thức: %s\n\nBạn có muốn xác nhận và xuất hóa đơn không?", currentTotal, displayMethod));
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -364,14 +352,32 @@ public class PosController {
             invoiceRepository.saveOrderDetails(currentInvoice.getId(), new ArrayList<>(cartItems));
 
             if (invoiceRepository.payInvoice(currentInvoice.getId(), dbMethod, currentTotal, 0, currentTotal)) {
-                showMessage("THANH TOÁN THÀNH CÔNG!", "green");
+
+                // Cập nhật thông tin để in bill
+                currentInvoice.setTotal(currentTotal);
+                currentInvoice.setPaymentMethod(dbMethod);
+
+                // Gọi lớp InvoicePrinter để in bill K80
+                boolean isPrinted = cocoffee.utils.InvoicePrinter.exportReceiptK80(currentInvoice, new ArrayList<>(cartItems));
+
+                if (isPrinted) {
+                    showMessage("THANH TOÁN THÀNH CÔNG & ĐÃ IN BILL!", "green");
+                    Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+                    infoAlert.setTitle("Hệ thống máy in CỎ Coffee");
+                    infoAlert.setHeaderText("Đã sinh hóa đơn thành công!");
+                    infoAlert.setContentText("File hóa đơn đã được lưu tại: receipts/" + currentInvoice.getInvoiceCode() + ".txt");
+                    infoAlert.show();
+                } else {
+                    showMessage("Thanh toán thành công nhưng lỗi in hóa đơn!", "orange");
+                }
+
                 currentInvoice = null;
                 currentInvoiceLabel.setText("CHƯA CHỌN HÓA ĐƠN");
                 cartItems.clear();
                 calculateTotal();
                 loadOpenInvoices();
             } else {
-                showMessage("Lỗi thanh toán!", "red");
+                showMessage("Lỗi hệ thống: Thanh toán không thành công!", "red");
             }
         }
     }
