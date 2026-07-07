@@ -6,8 +6,8 @@
 
 <VBox alignment="CENTER" spacing="18.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="cocoffee.controllers.LoginController"
-      stylesheets="@../styles/style.css" prefWidth="340" prefHeight="280"
-      maxWidth="340" maxHeight="280" styleClass="login-card">
+      stylesheets="@../styles/style.css" prefWidth="340" prefHeight="300"
+      maxWidth="340" maxHeight="300" styleClass="login-card">
 
     <padding>
         <Insets top="30" right="30" bottom="30" left="30"/>
@@ -16,7 +16,12 @@
     <Label text="ĐĂNG NHẬP" styleClass="title-text"/>
 
     <TextField fx:id="usernameField" promptText="Tên đăng nhập"/>
-    <PasswordField fx:id="passwordField" promptText="Mật khẩu"/>
+    <!-- 🌟 ĐÃ THÊM: onAction để bấm Enter tại ô Mật khẩu là đăng nhập luôn -->
+    <PasswordField fx:id="passwordField" promptText="Mật khẩu" onAction="#handleLogin"/>
+
+    <HBox alignment="CENTER_LEFT">
+        <CheckBox fx:id="rememberMeCheckBox" text="Nhớ tên đăng nhập"/>
+    </HBox>
 
     <Button text="Đăng nhập" styleClass="btn-primary" onAction="#handleLogin" prefWidth="Infinity"/>
 

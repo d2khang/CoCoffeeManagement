@@ -1,6 +1,7 @@
 package cocoffee.controllers;
 
 import cocoffee.config.DatabaseConfig;
+import cocoffee.models.Employee; // 🌟 NHỚ IMPORT MODEL EMPLOYEE
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,6 +13,9 @@ public class MainController {
 
     @FXML
     private Label statusLabel;
+
+    // 🌟 THÊM BIẾN NÀY: Để lưu trữ thông tin người đang đăng nhập
+    private Employee currentEmployee;
 
     @FXML
     public void initialize() {
@@ -26,12 +30,19 @@ public class MainController {
         }
     }
 
+    // 🌟 THÊM HÀM NÀY: Hàm hứng dữ liệu từ LoginController truyền sang
+    public void setCurrentEmployee(Employee employee) {
+        this.currentEmployee = employee;
+        // Đổi dòng trạng thái thành lời chào nhân viên
+        statusLabel.setText("Xin chào, " + employee.getFullName() + " (" + employee.getRole() + ")");
+        statusLabel.setStyle("-fx-text-fill: #1565C0; -fx-font-weight: bold;");
+    }
+
     // ---> HÀM MỞ MÀN HÌNH BÁN HÀNG (POS) <---
     @FXML
     protected void onPosClick() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/pos-view.fxml"));
-            // Màn hình POS cần cực kỳ to rộng để nhân viên dễ thao tác
             Scene posScene = new Scene(fxmlLoader.load(), 1024, 700);
 
             Stage currentStage = (Stage) statusLabel.getScene().getWindow();
@@ -49,15 +60,10 @@ public class MainController {
     @FXML
     protected void onMenuManagementClick() {
         try {
-            // 1. Tải bản thiết kế menu-view.fxml
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/menu-view.fxml"));
-            // Tạo cảnh mới với kích thước rộng rãi 900x600 để xem bảng dữ liệu
             Scene menuScene = new Scene(fxmlLoader.load(), 900, 600);
 
-            // 2. Lấy cửa sổ hiện tại
             Stage currentStage = (Stage) statusLabel.getScene().getWindow();
-
-            // 3. Đổi ruột sang màn hình quản lý thực đơn
             currentStage.setScene(menuScene);
             currentStage.setTitle("CỎ Coffee & Tea - Quản Lý Thực Đơn");
             currentStage.centerOnScreen();
@@ -74,7 +80,6 @@ public class MainController {
     protected void onHistoryClick() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/history-view.fxml"));
-            // Màn hình Lịch sử cũng cần rộng rãi để xem các cột thống kê
             Scene historyScene = new Scene(fxmlLoader.load(), 1024, 700);
 
             Stage currentStage = (Stage) statusLabel.getScene().getWindow();
@@ -84,6 +89,32 @@ public class MainController {
         } catch (Exception e) {
             e.printStackTrace();
             statusLabel.setText("Lỗi: Không thể mở màn hình Lịch Sử!");
+            statusLabel.setStyle("-fx-text-fill: red;");
+        }
+    }
+    // ---> HÀM BẬT POPUP ĐỔI MẬT KHẨU <---
+    @FXML
+    protected void onChangePasswordClick() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/change-password-view.fxml"));
+            Scene scene = new Scene(loader.load());
+
+            // Lấy Controller của popup và truyền nhân viên hiện tại sang
+            cocoffee.controllers.ChangePasswordController popupController = loader.getController();
+            popupController.setCurrentEmployee(currentEmployee);
+
+            // Mở một cửa sổ mới (Popup) đè lên trên
+            Stage popupStage = new Stage();
+            popupStage.setScene(scene);
+            popupStage.setTitle("Bảo mật - Đổi mật khẩu");
+            popupStage.setResizable(false);
+            // Ép người dùng phải thao tác xong popup này mới được quay lại cửa sổ chính
+            popupStage.initModality(javafx.stage.Modality.APPLICATION_MODAL);
+            popupStage.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusLabel.setText("Lỗi: Không thể mở cửa sổ Đổi Mật Khẩu!");
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }

@@ -10,23 +10,16 @@ import java.sql.SQLException;
 
 public class EmployeeRepository {
 
-    // Hàm này sẽ tìm kiếm nhân viên trong DB dựa trên tên đăng nhập (username)
     public Employee findByUsername(String username) {
-        // Câu lệnh SQL với dấu ? để chống lỗi bảo mật SQL Injection
         String sql = "SELECT * FROM Employee WHERE username = ?";
         Employee employee = null;
 
-        // Tự động mở và đóng kết nối Database an toàn bằng try-with-resources
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Thay thế dấu ? bằng username người dùng nhập vào
             pstmt.setString(1, username);
-
-            // Thực thi tìm kiếm
             ResultSet rs = pstmt.executeQuery();
 
-            // Nếu tìm thấy dòng dữ liệu khớp trong bảng SQLite
             if (rs.next()) {
                 employee = new Employee(
                         rs.getInt("id"),
@@ -43,7 +36,36 @@ public class EmployeeRepository {
             System.out.println("Lỗi khi tìm tài khoản: " + e.getMessage());
         }
 
-        // Trả về tài khoản tìm được (hoặc null nếu không thấy)
         return employee;
+    }
+
+    // 🌟 TÍNH NĂNG: Cập nhật thời gian đăng nhập cuối cùng
+    public void updateLastLogin(int employeeId) {
+        String sql = "UPDATE Employee SET last_login = CURRENT_TIMESTAMP WHERE id = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, employeeId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Lỗi cập nhật last_login: " + e.getMessage());
+        }
+    }
+
+    // 🌟 MỚI: Cập nhật mật khẩu (đã hash bằng BCrypt trước khi truyền vào đây)
+    public boolean updatePassword(int employeeId, String newPasswordHash) {
+        String sql = "UPDATE Employee SET password_hash = ? WHERE id = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, newPasswordHash);
+            pstmt.setInt(2, employeeId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Lỗi cập nhật mật khẩu: " + e.getMessage());
+            return false;
+        }
     }
 }
