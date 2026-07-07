@@ -161,4 +161,34 @@ public class InvoiceRepository {
             return false;
         }
     }
+    // 7. LẤY TẤT CẢ HÓA ĐƠN (Dùng cho Lịch sử / Thống kê)
+    public List<Invoice> getAllInvoices() {
+        List<Invoice> invoices = new ArrayList<>();
+        String sql = "SELECT * FROM Invoice ORDER BY created_at DESC";
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Invoice invoice = new Invoice(
+                        rs.getInt("id"),
+                        rs.getString("invoice_code"),
+                        rs.getString("table_number"),
+                        rs.getInt("employee_id"),
+                        rs.getDouble("subtotal"),
+                        rs.getDouble("discount"),
+                        rs.getDouble("total"),
+                        rs.getString("payment_method"),
+                        rs.getString("status"),
+                        rs.getString("created_at"),
+                        rs.getString("paid_at")
+                );
+                invoices.add(invoice);
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi lấy danh sách tất cả hóa đơn: " + e.getMessage());
+        }
+        return invoices;
+    }
 }

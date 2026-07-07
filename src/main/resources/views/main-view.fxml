@@ -6,14 +6,16 @@
 
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="cocoffee.controllers.MainController"
-      stylesheets="@../styles/style.css" prefWidth="600" prefHeight="400">
+      stylesheets="@../styles/style.css" prefWidth="800" prefHeight="500">
 
-    <Label text="CỎ Coffee &amp; Tea" styleClass="title-text"/>
+    <Label text="CỎ Coffee &amp; Tea" styleClass="title-text" style="-fx-font-size: 32px;"/>
     <Label fx:id="statusLabel" text="Cơ sở dữ liệu SQLite: ĐÃ KẾT NỐI THÀNH CÔNG!"/>
 
     <HBox alignment="CENTER" spacing="15">
         <Button text="Bán Hàng (POS)" styleClass="btn-primary" style="-fx-font-size: 16px; -fx-padding: 10 20;" onAction="#onPosClick"/>
 
         <Button text="Quản Lý Thực Đơn" styleClass="btn-primary" style="-fx-background-color: #2E7D32; -fx-font-size: 16px; -fx-padding: 10 20;" onAction="#onMenuManagementClick"/>
+
+        <Button text="Lịch Sử &amp; Thống Kê" styleClass="btn-primary" style="-fx-background-color: #1565C0; -fx-font-size: 16px; -fx-padding: 10 20;" onAction="#onHistoryClick"/>
     </HBox>
 </VBox>

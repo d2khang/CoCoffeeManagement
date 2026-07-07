@@ -68,4 +68,23 @@ public class MainController {
             statusLabel.setStyle("-fx-text-fill: red;");
         }
     }
+
+    // ---> HÀM MỞ MÀN HÌNH LỊCH SỬ & THỐNG KÊ (VERSION 0.6) <---
+    @FXML
+    protected void onHistoryClick() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/history-view.fxml"));
+            // Màn hình Lịch sử cũng cần rộng rãi để xem các cột thống kê
+            Scene historyScene = new Scene(fxmlLoader.load(), 1024, 700);
+
+            Stage currentStage = (Stage) statusLabel.getScene().getWindow();
+            currentStage.setScene(historyScene);
+            currentStage.setTitle("CỎ Coffee & Tea - Lịch Sử & Doanh Thu");
+            currentStage.centerOnScreen();
+        } catch (Exception e) {
+            e.printStackTrace();
+            statusLabel.setText("Lỗi: Không thể mở màn hình Lịch Sử!");
+            statusLabel.setStyle("-fx-text-fill: red;");
+        }
+    }
 }
