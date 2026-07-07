@@ -50,7 +50,6 @@ public class DatabaseConfig {
             );
         """;
 
-        // 🌟 ĐÃ SỬA: Bảng Invoice - Bổ sung thêm table_number
         String createInvoiceTable = """
             CREATE TABLE IF NOT EXISTS Invoice (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -68,7 +67,6 @@ public class DatabaseConfig {
             );
         """;
 
-        // Version 0.5: Chi tiết Hóa đơn
         String createOrderDetailTable = """
             CREATE TABLE IF NOT EXISTS OrderDetail (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -84,26 +82,23 @@ public class DatabaseConfig {
 
         String insertDefaultAdmin = """
             INSERT OR IGNORE INTO Employee (id, username, password_hash, full_name, role)
-            VALUES (1, 'admin', '$2a$10$iVCGiFV/dlSXuCXBPTuEn.nw8shJOKkVcrBsn1VtLp6WV5nvwdE/a', 'Chủ Quán CỎ', 'ADMIN');
+            VALUES (1, 'admin', '$2a$10$BtxNhiu5leEE9hszi0KYoem.WOD53EvPb8L6j6RKLk3v8Bpo7KAHy', 'Chủ Quán CỎ', 'ADMIN');
         """;
 
-        // 🌟 ĐÃ SỬA: Danh mục mới cực kỳ chi tiết theo yêu cầu của bạn
+        // 🌟 ĐÃ SỬA: Danh mục chính xác 100% theo yêu cầu mới nhất của bạn
         String insertDefaultCategories = """
             INSERT OR IGNORE INTO Category (id, name, description) VALUES
-            (1, 'Cà Phê', 'Pha phin, pha máy'),
-            (2, 'Trà', 'Trà trái cây, trà hoa'),
-            (3, 'Trà sữa', 'Các loại trà sữa truyền thống'),
-            (4, 'Sinh tố', 'Sinh tố trái cây tươi'),
-            (5, 'Latte', 'Latte nóng và lạnh'),
-            (6, 'Topping', 'Trân châu, thạch, pudding'),
-            (7, 'Nước ép', 'Ép nguyên chất'),
-            (8, 'Yogurt', 'Yogurt trái cây'),
-            (9, 'Soda', 'Soda mix'),
-            (10, 'Đồ ăn vặt', 'Snacks'),
-            (11, 'Bánh tráng trộn', 'Ăn vặt'),
-            (12, 'Mì trộn Hàn', 'Mì trộn cay'),
-            (13, 'Mì trộn Việt', 'Mì trộn truyền thống'),
-            (14, 'Combo cá viên chiên', 'Đồ ăn nhanh');
+            (1, 'Cà Phê', 'Pha phin, pha máy truyền thống'),
+            (2, 'Trà trái cây', 'Thức uống thanh mát từ trái cây tươi'),
+            (3, 'Trà sữa', 'Các dòng trà sữa đậm vị, béo ngậy'),
+            (4, 'Sinh tố', 'Sinh tố xay từ hoa quả tươi nguyên chất'),
+            (5, 'Latte', 'Cà phê sữa tươi nghệ thuật kiểu Ý'),
+            (6, 'Topping', 'Các loại thạch, trân châu, pudding ăn kèm'),
+            (7, 'Nước ép', 'Nước ép trái cây tươi giàu vitamin'),
+            (8, 'Yogurt', 'Sữa chua uống, sữa chua trái cây dẻo'),
+            (9, 'Soda', 'Nước giải khát có ga mix hương vị trái cây'),
+            (10, 'Danh mục đồ ăn', 'Các món ăn chính phục vụ tại quán'),
+            (11, 'Đồ ăn vặt', 'Món ăn chơi kèm theo cho khách nhâm nhi');
         """;
 
         // ==========================================
